@@ -10,6 +10,6 @@ import br.ufrn.shopminer.model.Config;
 @Repository
 public interface ConfigRepository extends JpaRepository<Config, Integer> {
 
-	Optional<Config> findById(Integer id);
+	Config findById(int id);
 
 }

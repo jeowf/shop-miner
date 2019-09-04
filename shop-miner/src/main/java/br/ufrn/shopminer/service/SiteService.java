@@ -18,7 +18,6 @@ public class SiteService {
 	@Autowired
 	private SiteRepository siteRepository;
 	
-	@Transactional(readOnly = false)
 	public List<Site> findAll() {
 		return siteRepository.findAll();
 	}
@@ -37,9 +36,5 @@ public class SiteService {
 		siteRepository.delete(entity);
 	}
 
-	public Site findById(Integer id) {
-		return siteRepository.findById(id.intValue());
-		//return null;
-	}
 	
 }
