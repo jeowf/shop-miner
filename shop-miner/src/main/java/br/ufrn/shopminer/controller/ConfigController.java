@@ -81,6 +81,7 @@ public class ConfigController {
 
 	}
 	@PutMapping
+	@ApiOperation(value = "Updates a Config")
 	public ResponseEntity<Config> putConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 
