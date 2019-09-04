@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.SiteService;

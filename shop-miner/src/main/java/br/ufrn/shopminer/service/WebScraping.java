@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.controller;
+package br.ufrn.shopminer.service;
 
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -9,29 +9,18 @@ import java.util.Map.Entry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import br.ufrn.shopminer.model.Config;
 import br.ufrn.shopminer.model.Product;
-import br.ufrn.shopminer.service.ConfigService;
-import br.ufrn.shopminer.service.SiteService;
 
-@RestController
-@RequestMapping("/api")
-public class WebScrapingController {
-	
-	
-	@Autowired
-	private SiteService siteService;
-	
-	@Autowired
-	private ConfigService configService;
-	
-	@GetMapping("/search/{query}")
-	public List<Product> search(@PathVariable("query") String query) throws IOException{
+@Service
+@Transactional(readOnly = true)
+public class WebScraping {
+
+	public List<Product> search(Config config, String query) throws IOException{
 		
 		List<Entry<String,String>> pairList= new java.util.ArrayList<>();
     	Entry<String,String> pair1=new AbstractMap.SimpleEntry<>("https://www.submarino.com.br/busca/{}","PriceUI-bwhjk3-11");
@@ -44,11 +33,9 @@ public class WebScrapingController {
     	
     	for (int i = 0; i < pairList.size(); i++) {
     		
-    		String itemQuery =  "rx 550";
+    		query = processQuery(query);
     		
-    		itemQuery = itemQuery.replace(" ", "-");
-    		
-    		Document doc = Jsoup.connect(pairList.get(i).getKey().replace("{}", itemQuery)).get();
+    		Document doc = Jsoup.connect(pairList.get(i).getKey().replace("{}", query)).get();
 
             Elements sites = doc.getElementsByClass(pairList.get(i).getValue());
             
@@ -60,14 +47,12 @@ public class WebScrapingController {
             
             listProducts.add(product);
             
-            
-//            System.out.println(doc.getElementsByTag("title").get(0));
-//            
-//            System.out.println(sites.get(0).text());
-			
-		}
+    	}
 		return listProducts;
 	}
 	
-
+	private String processQuery(String query) {
+		return query.replace(" ", "-");
+	}
+	
 }
