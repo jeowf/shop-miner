@@ -24,7 +24,7 @@ public class ConfigController {
 	private ConfigService configService;
 
 	@GetMapping("/config")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Returns a list of Configs")
 	public ResponseEntity<List<Config>> getSites() {
 		List<Config> sites;
 		ResponseEntity<List<Config>> re;
@@ -40,7 +40,7 @@ public class ConfigController {
 	}
 
 	@GetMapping("/config/{id}")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Returns a Config by id")
 	public ResponseEntity<Config> getConfig(@PathVariable("id") Integer id) {
 		Config config;
 		ResponseEntity<Config> re;
@@ -56,7 +56,7 @@ public class ConfigController {
 	}
 	
 	@PostMapping("/config")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Saves a new Config")
 	public ResponseEntity<Config> postConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 		
@@ -66,7 +66,7 @@ public class ConfigController {
 	}
 
 	@DeleteMapping("/config")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Deletes a Config")
 	public ResponseEntity<Config> deleteConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 

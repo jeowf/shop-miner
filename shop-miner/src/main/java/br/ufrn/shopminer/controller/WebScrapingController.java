@@ -40,7 +40,7 @@ public class WebScrapingController {
 	private ConfigService configService;
 	
 	@GetMapping("/search/{config}/{query}")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Returns a list of Product")
 	public ResponseEntity<List<Product>> search(@PathVariable("config") Integer configId, 
 												@PathVariable("query") String query) throws IOException{
 		

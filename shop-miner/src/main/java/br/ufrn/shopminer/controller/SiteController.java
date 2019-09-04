@@ -40,19 +40,9 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 	
-	@Autowired
-	private ConfigService configService;
-	
-//	@GetMapping
-//	public String index(Model model) {
-//		List<Site> all = siteService.findAll();
-//		model.addAttribute("listSite", all);
-//		model.addAttribute("");
-//		return "site/index";
-//	}
 	
 	@GetMapping("/site")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Returns a list of Site")
 	public ResponseEntity<List<Site>> getSites() {
 		List<Site> sites;
 		ResponseEntity<List<Site>> re;
@@ -68,7 +58,7 @@ public class SiteController {
 	}
 	
 	@GetMapping("/site/{id}")
-	@ApiOperation(value = "Envia via GET os dados do Site")
+	@ApiOperation(value = "Returns a Site by id")
 	public ResponseEntity<Site> getSite(@PathVariable("id") Integer id) {
 		Site site;
 		ResponseEntity<Site> re;
@@ -84,7 +74,7 @@ public class SiteController {
 	}
 	
 	@PostMapping("/site")
-	@ApiOperation(value = "Envia os dados do Site")
+	@ApiOperation(value = "Saves a new Site")
 	public ResponseEntity<Site> postSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 		
@@ -102,7 +92,7 @@ public class SiteController {
 	
 	//@PutMapping("/site")
 	@DeleteMapping("/site")
-	@ApiOperation(value = "Deleta dados do Site")
+	@ApiOperation(value = "Deletes a Site")
 	public ResponseEntity<Site> deleteSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 		
@@ -118,7 +108,7 @@ public class SiteController {
 	}
 	
 	@PutMapping("/site")
-	@ApiOperation(value = "Retorna os dados do Site")
+	@ApiOperation(value = "Updates a Site")
 	public ResponseEntity<Site> putSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 
