@@ -80,7 +80,7 @@ public class ConfigController {
 		return re;
 
 	}
-	@PutMapping("/config")
+	@PutMapp
 	public ResponseEntity<Config> putConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 
