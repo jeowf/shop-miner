@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,21 @@ public class SiteController {
 //		return "site/index";
 //	}
 	
+	@GetMapping("/site")
+	public ResponseEntity<List<Site>> getSites() {
+		List<Site> sites;
+		ResponseEntity<List<Site>> re;
+		
+		try {
+			sites = siteService.findAll();
+			re = new ResponseEntity<> (sites, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+	
+		return re;
+	}
+	
 	@GetMapping("/site/{id}")
 	public ResponseEntity<Site> getSite(@PathVariable("id") Integer id) {
 		Site site;
@@ -56,11 +73,47 @@ public class SiteController {
 	public ResponseEntity<Site> postSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 		
-		re = new ResponseEntity<>(null, HttpStatus.OK);
+		//re = new ResponseEntity<>(null, HttpStatus.OK);
+		
+		try {
+			siteService.save(site);
+			re = new ResponseEntity<> (site, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
 		
 		return re;
 	}
 	
+	//@PutMapping("/site")
+	@DeleteMapping("/site")
+	public ResponseEntity<Site> deleteSite(@RequestBody Site site){
+		ResponseEntity<Site> re;
+		
+		try {
+			siteService.delete(site);
+			re = new ResponseEntity<> (site, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		return re;	
+		
+	}
+	
+	@PutMapping("/site")
+	public ResponseEntity<Site> putSite(@RequestBody Site site){
+		ResponseEntity<Site> re;
+
+		try {
+			siteService.save(site);
+			re = new ResponseEntity<> (site, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		return re;
+	}
 	
 	
 	
