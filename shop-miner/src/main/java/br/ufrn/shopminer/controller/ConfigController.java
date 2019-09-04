@@ -3,6 +3,9 @@ package br.ufrn.shopminer.controller;
 import br.ufrn.shopminer.model.Config;
 //import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 //import br.ufrn.shopminer.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Api(value = "API REST Site")
+@CrossOrigin(origins="*")
 public class ConfigController {
 	
 	@Autowired
 	private ConfigService configService;
 
 	@GetMapping("/config")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<List<Config>> getSites() {
 		List<Config> sites;
 		ResponseEntity<List<Config>> re;
@@ -34,6 +40,7 @@ public class ConfigController {
 	}
 
 	@GetMapping("/config/{id}")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<Config> getConfig(@PathVariable("id") Integer id) {
 		Config config;
 		ResponseEntity<Config> re;
@@ -49,6 +56,7 @@ public class ConfigController {
 	}
 	
 	@PostMapping("/config")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<Config> postConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 		
@@ -58,6 +66,7 @@ public class ConfigController {
 	}
 
 	@DeleteMapping("/config")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<Config> deleteConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 
