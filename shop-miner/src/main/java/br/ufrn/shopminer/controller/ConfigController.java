@@ -18,7 +18,7 @@ public class ConfigController {
 	@Autowired
 	private ConfigService configService;
 
-	@GetMapping("/configs")
+	@GetMapping("/config")
 	public ResponseEntity<List<Config>> getSites() {
 		List<Config> sites;
 		ResponseEntity<List<Config>> re;
