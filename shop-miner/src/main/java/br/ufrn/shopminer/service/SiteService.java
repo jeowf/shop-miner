@@ -36,5 +36,10 @@ public class SiteService {
 	public void delete(Site entity) {
 		siteRepository.delete(entity);
 	}
+
+	public Site findById(Integer id) {
+		return siteRepository.findById(id.intValue());
+		//return null;
+	}
 	
 }

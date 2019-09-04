@@ -31,13 +31,19 @@ public class SiteController {
 		return "site/index";
 	}
 	
-	@GetMapping("/{id}")
+	/*@GetMapping("/{id}")
 	public String show(Model model, @PathVariable("id") Integer id) {
 		if (id != null) {
 			Site site = siteService.findOne(id).get();
 			model.addAttribute("site", site);
 		}
 		return "site/show";
+	}*/
+	
+	@GetMapping("/{id}")
+	public Site show(@PathVariable("id") Integer id) {
+		return siteService.findById(id);
 	}
+	
 	
 }
