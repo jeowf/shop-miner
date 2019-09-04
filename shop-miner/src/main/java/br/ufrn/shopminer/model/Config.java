@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "config")
 public class Config implements Serializable {
@@ -27,8 +29,10 @@ public class Config implements Serializable {
 	@Column(name = "description")
 	private String descrition;
 	
+	
 	@OneToMany(mappedBy="config", cascade = CascadeType.ALL)
-	List<Site> sites;
+	@JsonIgnore
+	private List<Site> sites;
 	
 	public Integer getId() {
 		return id;
@@ -53,6 +57,12 @@ public class Config implements Serializable {
 	public void setDescrition(String descrition) {
 		this.descrition = descrition;
 	}
-	
-	
+
+	public List<Site> getSites() {
+		return sites;
+	}
+
+	public void setSites(List<Site> sites) {
+		this.sites = sites;
+	}
 }

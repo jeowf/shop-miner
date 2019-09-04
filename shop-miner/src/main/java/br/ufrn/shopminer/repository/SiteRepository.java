@@ -8,6 +8,7 @@ import br.ufrn.shopminer.model.Site;
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Integer> {
 
+	//Optional<Site> findById(Integer id);
 	Site findById(int id);
 
 }
