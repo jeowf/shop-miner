@@ -80,4 +80,17 @@ public class ConfigController {
 		return re;
 
 	}
+	@PutMapping
+	public ResponseEntity<Config> putConfig(@RequestBody Config config){
+		ResponseEntity<Config> re;
+
+		try {
+			configService.save(config);
+			re = new ResponseEntity<> (config, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		return re;
+	}
 }
