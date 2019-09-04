@@ -121,12 +121,5 @@ public class SiteController {
 		
 		return re;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }
