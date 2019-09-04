@@ -45,7 +45,7 @@ public class WebScrapingService {
 
             Elements values = doc.getElementsByClass(site.getTagClass());
             
-            String name = doc.getElementsByTag("title").get(0).toString();
+            String name = site.getName();
             
             String price = values.get(0).text();
             Product product = new Product(name,price);
