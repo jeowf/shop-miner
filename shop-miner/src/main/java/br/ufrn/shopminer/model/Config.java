@@ -28,7 +28,7 @@ public class Config implements Serializable {
 	private String descrition;
 	
 	@OneToMany(mappedBy="config", cascade = CascadeType.ALL)
-	List<Site> sites;
+	private List<Site> sites;
 	
 	public Integer getId() {
 		return id;
@@ -53,6 +53,12 @@ public class Config implements Serializable {
 	public void setDescrition(String descrition) {
 		this.descrition = descrition;
 	}
-	
-	
+
+	public List<Site> getSites() {
+		return sites;
+	}
+
+	public void setSites(List<Site> sites) {
+		this.sites = sites;
+	}
 }

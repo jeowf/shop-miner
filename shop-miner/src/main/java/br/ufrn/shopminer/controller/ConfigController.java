@@ -9,13 +9,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class ConfigController {
 	
 	@Autowired
 	private ConfigService configService;
-	
+
+	@GetMapping("/configs")
+	public ResponseEntity<List<Config>> getSites() {
+		List<Config> sites;
+		ResponseEntity<List<Config>> re;
+
+		try {
+			sites = configService.findAll();
+			re = new ResponseEntity<> (sites, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+
+		return re;
+	}
+
 	@GetMapping("/config/{id}")
 	public ResponseEntity<Config> getConfig(@PathVariable("id") Integer id) {
 		Config config;
@@ -32,7 +49,7 @@ public class ConfigController {
 	}
 	
 	@PostMapping("/config")
-	public ResponseEntity<Config> postSite(@RequestBody Config config){
+	public ResponseEntity<Config> postConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 		
 		re = new ResponseEntity<>(null, HttpStatus.OK);
@@ -40,4 +57,18 @@ public class ConfigController {
 		return re;
 	}
 
+	@DeleteMapping("/config")
+	public ResponseEntity<Config> deleteConfig(@RequestBody Config config){
+		ResponseEntity<Config> re;
+
+		try {
+			configService.delete(config);
+			re = new ResponseEntity<> (config, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		return re;
+
+	}
 }
