@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +28,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.SiteService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api")
+@Api(value = "API REST Site")
+@CrossOrigin(origins="*")
 public class SiteController {
 	
 	@Autowired
@@ -47,6 +52,7 @@ public class SiteController {
 //	}
 	
 	@GetMapping("/site")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<List<Site>> getSites() {
 		List<Site> sites;
 		ResponseEntity<List<Site>> re;
@@ -62,6 +68,7 @@ public class SiteController {
 	}
 	
 	@GetMapping("/site/{id}")
+	@ApiOperation(value = "Envia via GET os dados do Site")
 	public ResponseEntity<Site> getSite(@PathVariable("id") Integer id) {
 		Site site;
 		ResponseEntity<Site> re;
@@ -77,6 +84,7 @@ public class SiteController {
 	}
 	
 	@PostMapping("/site")
+	@ApiOperation(value = "Envia os dados do Site")
 	public ResponseEntity<Site> postSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 		
@@ -94,6 +102,7 @@ public class SiteController {
 	
 	//@PutMapping("/site")
 	@DeleteMapping("/site")
+	@ApiOperation(value = "Deleta dados do Site")
 	public ResponseEntity<Site> deleteSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 		
@@ -109,6 +118,7 @@ public class SiteController {
 	}
 	
 	@PutMapping("/site")
+	@ApiOperation(value = "Retorna os dados do Site")
 	public ResponseEntity<Site> putSite(@RequestBody Site site){
 		ResponseEntity<Site> re;
 
