@@ -8,12 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.SiteService;
 
-@Controller
+@RestController
 @RequestMapping("/site")
 public class SiteController {
 	
@@ -31,19 +32,16 @@ public class SiteController {
 		return "site/index";
 	}
 	
-	/*@GetMapping("/{id}")
-	public String show(Model model, @PathVariable("id") Integer id) {
-		if (id != null) {
-			Site site = siteService.findOne(id).get();
-			model.addAttribute("site", site);
-		}
-		return "site/show";
-	}*/
-	
 	@GetMapping("/{id}")
-	public Site show(@PathVariable("id") Integer id) {
-		return siteService.findById(id);
+	public Site show(Model model, @PathVariable("id") Integer id) {
+		//if (id != null) {
+			Site site = siteService.findById(id);
+			model.addAttribute("site", site);
+		//}
+		return site;
 	}
 	
 	
+	
+
 }
