@@ -1,8 +1,15 @@
 package br.ufrn.shopminer.controller;
 
+import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map.Entry;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.SiteService;
@@ -114,6 +122,8 @@ public class SiteController {
 		
 		return re;
 	}
+	
+	
 	
 	
 	
