@@ -1,9 +1,7 @@
 package br.ufrn.shopminer.controller;
 
-import br.ufrn.shopminer.model.Config;
 import br.ufrn.shopminer.model.Favorite;
 //import br.ufrn.shopminer.model.Site;
-import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.FavoriteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +23,9 @@ public class FavoriteController {
 	@Autowired
 	private FavoriteService favoriteService;
 
-	@GetMapping("/config")
+	@GetMapping("/favorite")
 	@ApiOperation(value = "Returns a list of Configs")
-	public ResponseEntity<List<Favorite>> getConfigs() {
+	public ResponseEntity<List<Favorite>> getFavorites() {
 		List<Favorite> configs;
 		ResponseEntity<List<Favorite>> re;
 
@@ -41,9 +39,9 @@ public class FavoriteController {
 		return re;
 	}
 
-	@GetMapping("/config/{id}")
+	@GetMapping("/favorite/{id}")
 	@ApiOperation(value = "Returns a Config by id")
-	public ResponseEntity<Favorite> getConfig(@PathVariable("id") Integer id) {
+	public ResponseEntity<Favorite> getFavorite(@PathVariable("id") Integer id) {
 		Favorite favorite;
 		ResponseEntity<Favorite> re;
 		
@@ -57,19 +55,24 @@ public class FavoriteController {
 		return re;
 	}
 	
-	@PostMapping("/config")
+	@PostMapping("/favorite")
 	@ApiOperation(value = "Saves a new Config")
-	public ResponseEntity<Favorite> postConfig(@RequestBody Favorite favorite){
+	public ResponseEntity<Favorite> postFavorite(@RequestBody Favorite favorite){
 		ResponseEntity<Favorite> re;
 		
-		re = new ResponseEntity<>(null, HttpStatus.OK);
+		try {
+			favoriteService.save(favorite);
+			re = new ResponseEntity<> (favorite, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
 		
 		return re;
 	}
 
-	@DeleteMapping("/config")
+	@DeleteMapping("/favorite")
 	@ApiOperation(value = "Deletes a Config")
-	public ResponseEntity<Favorite> deleteConfig(@RequestBody Favorite favorite){
+	public ResponseEntity<Favorite> deleteFavorite(@RequestBody Favorite favorite){
 		ResponseEntity<Favorite> re;
 
 		try {
@@ -82,9 +85,9 @@ public class FavoriteController {
 		return re;
 
 	}
-	@PutMapping
-	@ApiOperation(value = "Updates a Config")
-	public ResponseEntity<Favorite> putConfig(@RequestBody Favorite favorite){
+	@PutMapping("/favorite")
+	@ApiOperation(value = "Updates a Favorite")
+	public ResponseEntity<Favorite> putFavorite(@RequestBody Favorite favorite){
 		ResponseEntity<Favorite> re;
 
 		try {

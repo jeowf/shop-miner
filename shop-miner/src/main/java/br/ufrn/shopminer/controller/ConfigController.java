@@ -60,7 +60,12 @@ public class ConfigController {
 	public ResponseEntity<Config> postConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 		
-		re = new ResponseEntity<>(null, HttpStatus.OK);
+		try {
+			configService.save(config);
+			re = new ResponseEntity<> (config, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
 		
 		return re;
 	}
@@ -80,7 +85,7 @@ public class ConfigController {
 		return re;
 
 	}
-	@PutMapping
+	@PutMapping("/config")
 	@ApiOperation(value = "Updates a Config")
 	public ResponseEntity<Config> putConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
