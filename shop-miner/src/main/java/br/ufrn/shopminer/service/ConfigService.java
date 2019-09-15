@@ -32,7 +32,7 @@ public class ConfigService {
 
 	@Transactional(readOnly = false)
 	public void delete(Config entity) throws Exception {
-		if (entity.getSites() != null)
+		if (entity.getSites() == null)
 			configRepository.delete(entity);
 		else {
 			throw new Exception("Cannot delete. Config is not empty");
