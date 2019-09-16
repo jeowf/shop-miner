@@ -61,8 +61,6 @@ public class ConfigController {
 	public ResponseEntity<Config> postConfig(@RequestBody Config config){
 		ResponseEntity<Config> re;
 		
-		//re = new ResponseEntity<>(null, HttpStatus.OK);
-		
 		try {
 			configService.save(config);
 			re = new ResponseEntity<> (config, HttpStatus.OK);
