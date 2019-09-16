@@ -2,6 +2,7 @@ package br.ufrn.shopminer.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,14 @@ public class SiteService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Site save(Site entity) {
+	public Site save(Site entity) throws Exception {
+		/* Try creating a valid URL */
+		try {
+			new URL(entity.getUrl()).toURI();
+		}
+		catch (Exception e) {
+		    throw new Exception("URL inválido\n");
+		}
 		return siteRepository.save(entity);
 	}
 
