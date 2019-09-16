@@ -2,6 +2,7 @@ package br.ufrn.shopminer.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -24,17 +25,20 @@ public class SiteService {
 	}
 	
 	public Optional<Site> findOne(Integer id) {
-		return siteRepository.findById(id);
+		if (siteRepository.findById(id).isPresent())
+			return siteRepository.findById(id);
+		else
+			throw new UnsupportedOperationException("Site não encontrado\n");
 	}
 	
 	@Transactional(readOnly = false)
 	public Site save(Site entity) throws Exception {
 		/* Try creating a valid URL */
 		try {
-			new URL(entity.getUrl()).toURI();
+			new URL(entity.getUrl().replaceAll("[{}]","")).toURI();
 		}
 		catch (Exception e) {
-		    throw new Exception("URL inválido\n");
+		    throw new MalformedURLException("URL inválido\n");
 		}
 		return siteRepository.save(entity);
 	}
