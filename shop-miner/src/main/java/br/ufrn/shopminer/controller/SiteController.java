@@ -65,7 +65,7 @@ public class SiteController {
 		
 		try {
 			site = siteService.findOne(id).get();
-			re = new ResponseEntity<> (site, HttpStatus.FOUND);
+			re = new ResponseEntity<> (site, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
