@@ -48,9 +48,10 @@ public class WebScrapingService {
             String name = site.getName();
             
             String price = values.get(0).text();
-            Product product = new Product(name,price);
+            //Product product = new Product(name,price);
             
-            products.add(product);
+            
+            //products.add(product);
     	}
 		return products;
 	}

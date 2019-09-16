@@ -34,6 +34,18 @@ public class Config implements Serializable {
 	@JsonIgnore
 	private List<Site> sites;
 	
+	@OneToMany(mappedBy="config", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Favorite> favorites;
+	
+	public List<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<Favorite> favorites) {
+		this.favorites = favorites;
+	}
+
 	public Integer getId() {
 		return id;
 	}

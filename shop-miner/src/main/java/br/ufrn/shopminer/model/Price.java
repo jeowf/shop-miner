@@ -1,47 +1,47 @@
 package br.ufrn.shopminer.model;
 
 import java.io.Serializable;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+
+//usar esse se der erro, ainda n testei
+//import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "site")
-public class Site implements Serializable {
+@Table(name = "price")
+public class Price implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="name")
-	private String name;
+	@Column(name="value")
+	private float value;
 	
-	@Column(name="url")
-	private String url;
-	
-	@Column(name="class")
-	private String tagClass;
-	
-	@ManyToOne
-	@JoinColumn(name="config_id")
-	private Config config;
+	@Column(name="date")
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
-	@OneToMany(mappedBy = "site", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "price", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JsonIgnore
 	private List<SiteProductPrice> siteProductPrices;
-	
+
 	public List<SiteProductPrice> getSiteProductPrices() {
 		return siteProductPrices;
 	}
@@ -58,35 +58,21 @@ public class Site implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public float getValue() {
+		return value;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(float value) {
+		this.value = value;
 	}
 
-	public String getUrl() {
-		return url;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setDate(Date date) {
+		this.date = date;
 	}
-
-	public String getTagClass() {
-		return tagClass;
-	}
-
-	public void setTagClass(String tagClass) {
-		this.tagClass = tagClass;
-	}
-
-	public Config getConfig() {
-		return config;
-	}
-
-	public void setConfig(Config config) {
-		this.config = config;
-	} 
+	
+	
 }

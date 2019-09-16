@@ -32,10 +32,12 @@ public class FavoriteService {
 
 	@Transactional(readOnly = false)
 	public void delete(Favorite entity) throws Exception {
+		/*
 		if (entity.getConfigs() != null)
 			favoriteRepository.delete(entity);
 		else {
 			throw new Exception("Cannot delete. Config is not empty");
 		}
+		*/
 	}
 }
