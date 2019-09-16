@@ -47,7 +47,7 @@ public class ConfigController {
 		
 		try {
 			config = configService.findOne(id).get();
-			re = new ResponseEntity<> (config, HttpStatus.FOUND);
+			re = new ResponseEntity<> (config, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
