@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufrn.shopminer.model.Config;
 import br.ufrn.shopminer.model.Product;
+import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.ConfigService;
+import br.ufrn.shopminer.service.ProductService;
 import br.ufrn.shopminer.service.SiteService;
 import br.ufrn.shopminer.service.WebScrapingService;
 import io.swagger.annotations.Api;
@@ -41,12 +43,12 @@ public class WebScrapingController {
 	
 	@GetMapping("/search/{config}/{query}")
 	@ApiOperation(value = "Returns a list of Product")
-	public ResponseEntity<List<Product>> search(@PathVariable("config") Integer configId, 
-												@PathVariable("query") String query) throws IOException{
+	public ResponseEntity<List<SiteProductPrice>> search(@PathVariable("config") Integer configId, 
+												@PathVariable("query") String query){
 		
-		List<Product> products;
-		ResponseEntity<List<Product>> re;
-
+		List<SiteProductPrice> products;
+		ResponseEntity<List<SiteProductPrice>> re;
+		
 		try {
 			products = wsService.search(configService.findOne(configId).get(), query);
 			re = new ResponseEntity<> (products, HttpStatus.OK);
@@ -56,6 +58,8 @@ public class WebScrapingController {
 
 		return re;
 	}
+
+	
 	
 
 }

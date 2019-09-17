@@ -1,6 +1,7 @@
 package br.ufrn.shopminer.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.ufrn.shopminer.model.Config;
+import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.Site;
+import br.ufrn.shopminer.model.SiteProductPrice;
+
+import java.sql.Timestamp;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,7 +30,17 @@ public class WebScrapingService {
 	//@Autowired
 	//private ConfigService configService;
 	
-	public List<Product> search(Config config, String query) throws IOException{
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private PriceService priceService;
+	
+	@Autowired
+	private SiteProductPriceService siteProductPriceService;
+	
+	
+	public List<SiteProductPrice> search(Config config, String query) throws IOException{
 		
 //		List<Entry<String,String>> pairList= new java.util.ArrayList<>();
 //    	Entry<String,String> pair1=new AbstractMap.SimpleEntry<>("https://www.submarino.com.br/busca/{}","PriceUI-bwhjk3-11");
@@ -33,10 +48,11 @@ public class WebScrapingService {
 //    	pairList.add(pair1);
 //    	pairList.add(pair3);
 //    	
-        ArrayList<Product> products = new ArrayList<Product>();
+        ArrayList<SiteProductPrice> products = new ArrayList<SiteProductPrice>();
         List<Site> sites = config.getSites();
     
-        
+        Product product = findProduct(query);
+        /*
     	for (Site site : sites) {
     		
     		query = processQuery(query);
@@ -45,19 +61,57 @@ public class WebScrapingService {
 
             Elements values = doc.getElementsByClass(site.getTagClass());
             
-            String name = site.getName();
+            //String name = site.getName();
+            String value = values.get(0).text();
             
-            String price = values.get(0).text();
-            //Product product = new Product(name,price);
+            Timestamp ts = new Timestamp(System.currentTimeMillis());  
+            Date date=new Date(ts.getTime());  
             
+            Price price = registerPrice(value, date);
             
-            //products.add(product);
-    	}
+            //SiteProductPrice spp = new SiteProductPrice(site, product, price);
+            
+            //siteProductPriceService.save(spp); 
+            
+            //products.add(spp);
+            
+    	}*/
+    	
 		return products;
 	}
 	
 	private String processQuery(String query) {
 		return query.replace(" ", "-");
 	}
+	
+	private Product findProduct(String name) {
+		Product product;
+		System.out.println("aaaa");
+		try {
+			Product p = new Product();
+			p.setName(name);
+			product = productService.save(p);
+			System.out.println("eba");
+			
+		} catch (Exception e) {
+			
+			product = productService.findByName(name);
+			System.out.println("opa");
+		}
+		
+		return product;
+	}
+	
+	private Price registerPrice(String value, Date date) {
+		Price price = new Price();
+		
+		price.setValue(value);
+		price.setDate(date);
+		
+		priceService.save(price);
+		
+		return price;
+	}
+	
 	
 }

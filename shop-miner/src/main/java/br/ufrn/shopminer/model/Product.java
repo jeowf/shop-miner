@@ -11,10 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+//@Table(name = "product", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 @Table(name = "product")
 public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column
+	@Column(name="name", unique = true)
 	private String name;
 
 	@OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

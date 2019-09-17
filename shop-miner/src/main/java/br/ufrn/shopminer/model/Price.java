@@ -32,7 +32,7 @@ public class Price implements Serializable {
 	private Integer id;
 	
 	@Column(name="value")
-	private float value;
+	private String value;
 	
 	@Column(name="date")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -58,11 +58,11 @@ public class Price implements Serializable {
 		this.id = id;
 	}
 
-	public float getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(float value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

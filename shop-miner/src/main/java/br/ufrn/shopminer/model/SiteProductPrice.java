@@ -64,6 +64,13 @@ public class SiteProductPrice implements Serializable {
 	public void setPrice(Price price) {
 		this.price = price;
 	}
+
+	public SiteProductPrice(Site site, Product product, Price price) {
+		super();
+		this.site = site;
+		this.product = product;
+		this.price = price;
+	}
 	
 	
 	
