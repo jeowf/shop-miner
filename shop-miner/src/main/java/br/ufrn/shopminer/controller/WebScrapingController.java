@@ -52,22 +52,7 @@ public class WebScrapingController {
 		
 		List<SiteProductPrice> products;
 		ResponseEntity<List<SiteProductPrice>> re;
-	/*	
-		Product product;
-		
-		System.out.println("aaaa");
-		try {
-			Product p = new Product();
-			p.setName(query);
-			product = productService.save(p);
 
-			
-		} catch (Exception e) {
-			System.out.println("opa3");
-			product = productService.findByName(query);
-			System.out.println("opa");
-		}
-		*/
 		try {
 			products = wsService.search(configService.findOne(configId).get(), query);
 			re = new ResponseEntity<> (products, HttpStatus.OK);
@@ -78,7 +63,20 @@ public class WebScrapingController {
 		return re;
 	}
 
-	
+	@GetMapping("/search/auto/{config}")
+	@ApiOperation(value = "Returns a list of Product")
+	public ResponseEntity<Object> auto(@PathVariable("config") Integer configId) {
+		ResponseEntity<Object> re;
+			
+		try {
+			wsService.autoSearch(configService.findOne(configId).get());
+			re =  new ResponseEntity<> (null, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+		
+		return re;
+	}
 	
 
 }

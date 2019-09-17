@@ -47,7 +47,7 @@ public class FavoriteController {
 		
 		try {
 			favorite = favoriteService.findOne(id).get();
-			re = new ResponseEntity<> (favorite, HttpStatus.FOUND);
+			re = new ResponseEntity<> (favorite, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}

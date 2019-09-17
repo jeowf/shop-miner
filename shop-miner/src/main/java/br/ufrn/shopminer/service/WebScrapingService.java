@@ -11,11 +11,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.ufrn.shopminer.model.Config;
+import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.Site;
@@ -39,32 +41,23 @@ public class WebScrapingService {
 	@Autowired
 	private SiteProductPriceService siteProductPriceService;
 	
+	private boolean started = false;
+	
 	@Transactional(readOnly = false)
 	public List<SiteProductPrice> search(Config config, String query) throws IOException{
-		
-//		List<Entry<String,String>> pairList= new java.util.ArrayList<>();
-//    	Entry<String,String> pair1=new AbstractMap.SimpleEntry<>("https://www.submarino.com.br/busca/{}","PriceUI-bwhjk3-11");
-//    	Entry<String,String> pair3=new AbstractMap.SimpleEntry<>("https://lista.mercadolivre.com.br/{}#D[A:{}","item__price");
-//    	pairList.add(pair1);
-//    	pairList.add(pair3);
-//    	
         ArrayList<SiteProductPrice> products = new ArrayList<SiteProductPrice>();
         List<Site> sites = config.getSites();
     
         Product product = findProduct(query);
 
         
-        //Product product = findProduct(query);
-        
     	for (Site site : sites) {
     		
     		query = processQuery(query);
-    		
     		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
-
             Elements values = doc.getElementsByClass(site.getTagClass());
             
-            //String name = site.getName();
+
             String value = values.get(0).text();
             
             Timestamp ts = new Timestamp(System.currentTimeMillis());  
@@ -73,15 +66,57 @@ public class WebScrapingService {
             Price price = registerPrice(value, date);
             
             SiteProductPrice spp = new SiteProductPrice(site, product, price);
-            
             siteProductPriceService.save(spp); 
-            
             products.add(spp);
             
     	}
-    	
 		return products;
 	}
+	
+	
+	
+	
+	@Async
+	@Transactional(readOnly = false)
+	public void autoSearch(Config config) throws InterruptedException{
+		if (!started) {
+			started = true;
+			
+			while(started) {	
+				try {
+					
+					//System.out.println(config.getFavorites().size());
+					for (Favorite fav : config.getFavorites()) {
+						System.out.println(fav.getValue());
+						
+						List<SiteProductPrice>  r = search(config, fav.getValue());
+					 						
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			
+					
+				System.out.println("opa");
+				Thread.sleep(5 * 1000L);
+			}
+		}
+	}
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private String processQuery(String query) {
 		return query.replace(" ", "-");
