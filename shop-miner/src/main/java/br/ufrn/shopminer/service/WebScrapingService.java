@@ -39,7 +39,7 @@ public class WebScrapingService {
 	@Autowired
 	private SiteProductPriceService siteProductPriceService;
 	
-	
+	@Transactional(readOnly = false)
 	public List<SiteProductPrice> search(Config config, String query) throws IOException{
 		
 //		List<Entry<String,String>> pairList= new java.util.ArrayList<>();
@@ -52,7 +52,10 @@ public class WebScrapingService {
         List<Site> sites = config.getSites();
     
         Product product = findProduct(query);
-        /*
+
+        
+        //Product product = findProduct(query);
+        
     	for (Site site : sites) {
     		
     		query = processQuery(query);
@@ -69,13 +72,13 @@ public class WebScrapingService {
             
             Price price = registerPrice(value, date);
             
-            //SiteProductPrice spp = new SiteProductPrice(site, product, price);
+            SiteProductPrice spp = new SiteProductPrice(site, product, price);
             
-            //siteProductPriceService.save(spp); 
+            siteProductPriceService.save(spp); 
             
-            //products.add(spp);
+            products.add(spp);
             
-    	}*/
+    	}
     	
 		return products;
 	}
@@ -84,24 +87,25 @@ public class WebScrapingService {
 		return query.replace(" ", "-");
 	}
 	
+	@Transactional(readOnly = false)
 	private Product findProduct(String name) {
-		Product product;
-		System.out.println("aaaa");
-		try {
+		
+		Product product = null;
+		
+		product = productService.findByName(name);
+
+		if (product == null) {
 			Product p = new Product();
 			p.setName(name);
+			System.out.println("cu");
+			
 			product = productService.save(p);
-			System.out.println("eba");
-			
-		} catch (Exception e) {
-			
-			product = productService.findByName(name);
-			System.out.println("opa");
 		}
 		
 		return product;
 	}
 	
+	@Transactional(readOnly = false)
 	private Price registerPrice(String value, Date date) {
 		Price price = new Price();
 		

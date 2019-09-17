@@ -38,8 +38,11 @@ public class ProductService {
 	
 	@Transactional(readOnly = false)
 	public Product findByName(String name) {
+		List<Product> product =  productRepository.findByName(name.replace("+", " "));
+		if (product.size() > 0)
+			return product.get(0);
 		
-		return productRepository.findByName(name.replace("+", " ")).get(0);
+		return null;
 	}
 	
 

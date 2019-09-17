@@ -23,6 +23,7 @@ import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.ProductService;
+import br.ufrn.shopminer.service.SiteProductPriceService;
 import br.ufrn.shopminer.service.SiteService;
 import br.ufrn.shopminer.service.WebScrapingService;
 import io.swagger.annotations.Api;
@@ -41,6 +42,9 @@ public class WebScrapingController {
 	@Autowired
 	private ConfigService configService;
 	
+	//@Autowired
+	//private ProductService productService;
+	
 	@GetMapping("/search/{config}/{query}")
 	@ApiOperation(value = "Returns a list of Product")
 	public ResponseEntity<List<SiteProductPrice>> search(@PathVariable("config") Integer configId, 
@@ -48,7 +52,22 @@ public class WebScrapingController {
 		
 		List<SiteProductPrice> products;
 		ResponseEntity<List<SiteProductPrice>> re;
+	/*	
+		Product product;
 		
+		System.out.println("aaaa");
+		try {
+			Product p = new Product();
+			p.setName(query);
+			product = productService.save(p);
+
+			
+		} catch (Exception e) {
+			System.out.println("opa3");
+			product = productService.findByName(query);
+			System.out.println("opa");
+		}
+		*/
 		try {
 			products = wsService.search(configService.findOne(configId).get(), query);
 			re = new ResponseEntity<> (products, HttpStatus.OK);
