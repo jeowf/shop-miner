@@ -32,6 +32,8 @@ public class SiteProductPrice implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "price_id")
     private Price price;
+    
+    public SiteProductPrice() {}
 
 	public Integer getId() {
 		return id;

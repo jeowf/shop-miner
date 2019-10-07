@@ -60,11 +60,11 @@ public class WebScrapingService {
     		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
             Elements values = doc.getElementsByClass(site.getTagClass());
             
-            String productURL = doc.getElementsByClass("item__info-link").get(0).attr("href");
+            site.setProductLink(doc.getElementsByClass(site.getProductClass()).get(0).attr("href"));
                                     
             String value = values.get(0).text();
             
-            searchProduct(product, productURL);
+            searchProduct(product, site.getProductLink() ,site);
             
             Timestamp ts = new Timestamp(System.currentTimeMillis());  
             Date date=new Date(ts.getTime());  
@@ -80,15 +80,15 @@ public class WebScrapingService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Product searchProduct(Product product, String query) throws IOException{
+	public Product searchProduct(Product product, String query, Site site) throws IOException{
 		
 		    product = findProduct(product.getName());
         		
         	Document doc = Jsoup.connect(query).get();                        
             
-            product.setImg(doc.getElementsByClass("gallery-trigger").get(0).attr("href"));
+            product.setImg(doc.getElementsByClass(site.getImgClass()).get(0).attr("href"));
                         
-            product.setDescription(doc.getElementsByClass("item-description__text").get(0).text());
+            product.setDescription(doc.getElementsByClass(site.getDescriptionClass()).get(0).text());
 			
     	
 		return product;
