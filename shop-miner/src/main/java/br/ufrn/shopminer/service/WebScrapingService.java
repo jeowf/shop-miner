@@ -1,5 +1,7 @@
 package br.ufrn.shopminer.service;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.AbstractMap;
@@ -58,8 +60,11 @@ public class WebScrapingService {
     		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
             Elements values = doc.getElementsByClass(site.getTagClass());
             
-
+            String productURL = doc.getElementsByClass("item__info-link").get(0).attr("href");
+                                    
             String value = values.get(0).text();
+            
+            searchProduct(product, productURL);
             
             Timestamp ts = new Timestamp(System.currentTimeMillis());  
             Date date=new Date(ts.getTime());  
@@ -72,6 +77,21 @@ public class WebScrapingService {
             
     	}
 		return products;
+	}
+	
+	@Transactional(readOnly = false)
+	public Product searchProduct(Product product, String query) throws IOException{
+		
+		    product = findProduct(product.getName());
+        		
+        	Document doc = Jsoup.connect(query).get();                        
+            
+            product.setImg(doc.getElementsByClass("gallery-trigger").get(0).attr("href"));
+                        
+            product.setDescription(doc.getElementsByClass("item-description__text").get(0).text());
+			
+    	
+		return product;
 	}
 	
 	
@@ -140,9 +160,5 @@ public class WebScrapingService {
 		
 		return price;
 	}
-	
-	
-	
-	
 	
 }

@@ -32,6 +32,28 @@ public class Product implements Serializable{
 	@JsonIgnore
 	private List<SiteProductPrice> siteProductPrices;
 	
+	@Column(name="description", columnDefinition = "Text")
+	private String description;
+	
+	@Column(name="img")
+	private String img;
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public List<SiteProductPrice> getSiteProductPrices() {
 		return siteProductPrices;
 	}

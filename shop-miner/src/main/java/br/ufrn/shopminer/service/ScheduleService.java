@@ -74,12 +74,12 @@ public class ScheduleService {
 	
 	private void executeCurrentQueries() {
 		
-		System.out.println(currentTime);
+		//System.out.println(currentTime);
 		
 		
 		while (!tasks.isEmpty() && tasks.peek().time <= currentTime) {
 			Pair p = tasks.poll();
-			System.out.println(p.value);
+			//System.out.println(p.value);
 			
 			Pair newP = new Pair((currentTime + p.itTime), p.itTime, p.value);
 			
