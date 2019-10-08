@@ -3,6 +3,7 @@ package br.ufrn.shopminer.service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +84,8 @@ public class FavoriteService {
 				prices.add(spp.getPrice());					
 			}
 		}
+		
+		Collections.sort(prices);
 		
 		return prices;
 	}

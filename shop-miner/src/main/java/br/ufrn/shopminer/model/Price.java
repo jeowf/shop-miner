@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "price")
-public class Price implements Serializable {
+public class Price implements Serializable, Comparable<Price> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -73,6 +73,27 @@ public class Price implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	@Override
+	public int compareTo(Price o) {
+		/*
+		Double v1 = Double.parseDouble(value
+                			.replaceAll("R|\\$| |\\.", "")
+                			.replaceAll(",","."));
+		Double v2 =  Double.parseDouble(o.value
+    						.replaceAll("R|\\$| |\\.", "")
+    						.replaceAll(",","."));
+    						*/
+		// TODO Auto-generated method stub
+		if (date.equals(o.date))
+			return 0;
+		else if (date.after(o.date))
+			return 1;
+		else
+			return -1;
+	}
+	
+	
 	
 	
 }
