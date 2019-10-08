@@ -2,6 +2,7 @@ package br.ufrn.shopminer.strategies;
 
 import br.ufrn.shopminer.model.Price;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -26,5 +27,10 @@ public class LinearRegression implements Strategy{
         int year = date.getYear();
         return -1;
     }
+	@Override
+	public void train(ArrayList<Price> prices, int degree) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
