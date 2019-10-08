@@ -1,8 +1,15 @@
 package br.ufrn.shopminer.controller;
 
 import br.ufrn.shopminer.model.Favorite;
+import br.ufrn.shopminer.model.Price;
+import br.ufrn.shopminer.model.Product;
+import br.ufrn.shopminer.model.Site;
+import br.ufrn.shopminer.model.SiteProductPrice;
 //import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.FavoriteService;
+import br.ufrn.shopminer.service.ProductService;
+import br.ufrn.shopminer.service.SiteProductPriceService;
+import br.ufrn.shopminer.service.SiteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -12,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +30,15 @@ public class FavoriteController {
 	
 	@Autowired
 	private FavoriteService favoriteService;
+	
+	@Autowired
+	private SiteService siteService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private SiteProductPriceService sppService;
 
 	@GetMapping("/favorite")
 	@ApiOperation(value = "Returns a list of Configs")
@@ -85,6 +102,7 @@ public class FavoriteController {
 		return re;
 
 	}
+	
 	@PutMapping("/favorite")
 	@ApiOperation(value = "Updates a Favorite")
 	public ResponseEntity<Favorite> putFavorite(@RequestBody Favorite favorite){
@@ -95,6 +113,25 @@ public class FavoriteController {
 			re = new ResponseEntity<> (favorite, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		return re;
+	}
+	
+	@GetMapping("/favorite/{id}/{site}")
+	@ApiOperation(value = "desc")
+	public ResponseEntity<List<Price>> getPrices(@PathVariable("id") Integer id, @PathVariable("site") Integer id_site) {
+
+		List<Price> prices;
+		
+		ResponseEntity<List<Price>> re;
+		try {
+			prices = favoriteService.findPrices(id, id_site);
+			
+			
+			re = new ResponseEntity<> (prices, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
 
 		return re;
