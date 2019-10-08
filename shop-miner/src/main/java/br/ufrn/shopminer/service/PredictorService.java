@@ -100,6 +100,7 @@ public class PredictorService {
 
         String dateString = bestDate.getDay() + "-" + (bestDate.getMonth()+1) + "-" + bestDate.getYear();
         result = best + "|" + dateString + "|" + bestSite.getName();
+        //result = "O melhor dia para adiquirir o produto é em "+ dateString + " custando R$ " + best + " na loja "+ bestSite.getName();
         
         return result;
     	
