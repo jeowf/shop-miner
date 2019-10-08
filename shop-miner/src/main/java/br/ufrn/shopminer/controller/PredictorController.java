@@ -33,35 +33,39 @@ public class PredictorController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/predict/{fav}/{mi}/{yi}/{me}/{ye}") //
+    @GetMapping("/predict/{fav}/{di}-{mi}-{yi}/{de}-{me}-{ye}") //
     @ApiOperation(value = "Returns an object with best price")
-    public ResponseEntity<Double> getPredictions(
+    public ResponseEntity<String> getPredictions(
             @PathVariable("fav") Integer fav,
+            @PathVariable("di") Integer di,
             @PathVariable("mi") Integer mi,
             @PathVariable("yi") Integer yi,
+            @PathVariable("de") Integer de,
             @PathVariable("me") Integer me,
             @PathVariable("ye") Integer ye
             ) {
-        ResponseEntity<Double> re;
+        ResponseEntity<String> re;
 
         double best = 999999;
         Date bestDate = new Date();
         Site bestSite = new Site();
-        	
+        
+        String result = "";
+        
         try {
             Favorite favorite = favoriteService.findOne(fav).get();
             List<Site> sites = favorite.getConfig().getSites();
             
           
-            Date start = new Date();
-            start.setMonth(2);
-            start.setYear(yi);
+            Date start = new Date(yi, mi, di);
+            //start.setMonth(2);
+            //start.setYear(yi);
 
             
-            Date end = new Date();
-            start.setMonth(9);
-            start.setYear(ye);
+            Date end = new Date(ye, me, de);
             
+            System.out.println("start " + start);
+            System.out.println("end " + end);
             
             
             for (Site site : sites) {
@@ -69,15 +73,13 @@ public class PredictorController {
             	predictorService.train(prices, 5);
             	
             	Date aux = new Date();
-                start.setMonth(start.getMonth());
-                start.setYear(start.getYear());
+                aux.setMonth(start.getMonth());
+                aux.setYear(start.getYear());
                 
-                System.out.println(start);
-                System.out.println(end);
                 
                 while (aux.before(end)) {
                 	System.out.println("bef " + aux);
-                	double pred = predictorService.predict(start);
+                	double pred = predictorService.predict(aux);
                 	
                 	if (pred < best) {
                 		best = pred;
@@ -96,9 +98,13 @@ public class PredictorController {
             
             System.out.println(best);
             System.out.println(bestDate);
-            System.out.println(bestSite.getName());
+            
+            String dateString = bestDate.getDay() + "-" + (bestDate.getMonth()+1) + "-" + bestDate.getYear();
+            System.out.println("BEST: " + dateString);
             
             
+            result = best + "|" + dateString + "|" + bestSite.getName();
+            System.out.println(result);
             //SiteProductPrice best = new SiteProductPrice();
             //Price bestPrice = new Price();
             //Favorite favorite = favoriteService.findOne(fav).get();
@@ -125,7 +131,7 @@ public class PredictorController {
 
             //List<Price> prices =  favoriteService.findPrices(sites.get(0).getId(),fav);
 
-            re = new ResponseEntity<Double> (best, HttpStatus.OK);
+            re = new ResponseEntity<String> (result, HttpStatus.OK);
         } catch (Exception e) {
             re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
         }
