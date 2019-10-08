@@ -5,6 +5,7 @@ import br.ufrn.shopminer.strategies.LinearRegression;
 import br.ufrn.shopminer.strategies.PolynomialMonthRegression;
 import br.ufrn.shopminer.strategies.Strategy;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -26,5 +27,9 @@ public class PredictorService {
         else {
             throw new IllegalArgumentException("O método " + strategy + " não foi implementado ainda");
         }
+    }
+
+    public void train(ArrayList<Price> prices, int degree) {
+        this.strategy.train(prices, degree);
     }
 }
