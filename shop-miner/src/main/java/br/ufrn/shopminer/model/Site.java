@@ -41,11 +41,22 @@ public class Site implements Serializable {
 	@Column(name="pclass")
 	private String productClass;
 	
+	public String getRadicalLink() {
+		return radicalLink;
+	}
+
+	public void setRadicalLink(String radicalLink) {
+		this.radicalLink = radicalLink;
+	}
+
 	@Column(name="dclass")
 	private String descriptionClass;
 	
 	@Column(name="productLink")
 	private String productLink;
+	
+	@Column(name="radicalLink")
+	private String radicalLink;
 	
 	public String getProductLink() {
 		return productLink;

@@ -61,7 +61,7 @@ public class WebScrapingService {
             Elements values = doc.getElementsByClass(site.getTagClass());
             
             site.setProductLink(doc.getElementsByClass(site.getProductClass()).get(0).attr("href"));
-                                    
+                        
             String value = values.get(0).text();
             
             searchProduct(product, site.getProductLink() ,site);
@@ -83,11 +83,17 @@ public class WebScrapingService {
 	public Product searchProduct(Product product, String query, Site site) throws IOException{
 		
 		    product = findProduct(product.getName());
-        		
-        	Document doc = Jsoup.connect(query).get();                        
+		    
+		    Document doc;
+        	
+		    try {
+		    	 doc = Jsoup.connect(query).get();                        
+		    }catch(Exception e) {
+		    	 doc = Jsoup.connect(site.getRadicalLink() + query).get();    
+		    }
+		    		    
+            product.setImg(doc.getElementsByClass(site.getImgClass()).get(0).select("img").first().attr("abs:src"));
             
-            product.setImg(doc.getElementsByClass(site.getImgClass()).get(0).attr("href"));
-                        
             product.setDescription(doc.getElementsByClass(site.getDescriptionClass()).get(0).text());
 			
     	
