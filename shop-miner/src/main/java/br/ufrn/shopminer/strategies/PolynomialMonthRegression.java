@@ -10,7 +10,7 @@ import weka.core.matrix.QRDecomposition;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PolynomialRegression implements Comparable<PolynomialRegression> , Strategy{
+public class PolynomialMonthRegression implements Comparable<PolynomialMonthRegression> , Strategy{
     private String variableName;  // name of the predictor variable
     private int degree;                 // degree of the polynomial regression
     private Matrix beta;                // the polynomial regression coefficients
@@ -18,6 +18,7 @@ public class PolynomialRegression implements Comparable<PolynomialRegression> , 
     private double sst;                 // total sum of squares
 
 
+    public PolynomialMonthRegression() {}
     /**
      * Performs a polynomial reggression on the data points {@code (y[i], x[i])}.
      * Uses n as the name of the predictor variable.
@@ -29,7 +30,7 @@ public class PolynomialRegression implements Comparable<PolynomialRegression> , 
     //public PolynomialRegression(double[] x, double[] y, int degree) {
       //  this(x, y, degree, "n");
     //}
-    public PolynomialRegression(ArrayList<Price> prices, int degree) {
+    public PolynomialMonthRegression(ArrayList<Price> prices, int degree) {
         double[] x = new double[prices.size()];
         double[] y = new double[prices.size()];
 
@@ -42,6 +43,19 @@ public class PolynomialRegression implements Comparable<PolynomialRegression> , 
         this.initialize(x, y, degree,"Price");
     }
 
+    @Override
+    public void train(ArrayList<Price> prices, int degree) {
+        double[] x = new double[prices.size()];
+        double[] y = new double[prices.size()];
+
+        for (int i = 0; i < prices.size(); i++) {
+            x[i] = prices.get(i).getDate().getMonth();
+            y[i] = Double.parseDouble(prices.get(i).getValue()
+                    .replaceAll("R|\\$| |\\.", "")
+                    .replaceAll(",","."));
+        }
+        this.initialize(x, y, degree,"Price");
+    }
     /**
      * Performs a polynomial reggression on the data points {@code (y[i], x[i])}.
      *
@@ -183,7 +197,7 @@ public class PolynomialRegression implements Comparable<PolynomialRegression> , 
     /**
      * Compare lexicographically.
      */
-    public int compareTo(PolynomialRegression that) {
+    public int compareTo(PolynomialMonthRegression that) {
         double EPSILON = 1E-5;
         int maxDegree = Math.max(this.degree(), that.degree());
         for (int j = maxDegree; j >= 0; j--) {

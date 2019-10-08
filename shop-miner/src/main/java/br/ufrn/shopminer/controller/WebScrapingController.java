@@ -63,6 +63,7 @@ public class WebScrapingController {
 		return re;
 	}
 
+	/*
 	@GetMapping("/search/auto/{config}")
 	@ApiOperation(value = "Returns a list of Product")
 	public ResponseEntity<Object> auto(@PathVariable("config") Integer configId) {
@@ -77,6 +78,6 @@ public class WebScrapingController {
 		
 		return re;
 	}
-	
+	*/
 
 }

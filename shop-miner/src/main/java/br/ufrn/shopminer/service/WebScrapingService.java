@@ -53,29 +53,30 @@ public class WebScrapingService {
     
         Product product = findProduct(query);
 
-        
-    	for (Site site : sites) {
-    		
-    		query = processQuery(query);
-    		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
-            Elements values = doc.getElementsByClass(site.getTagClass());
-            
-            site.setProductLink(doc.getElementsByClass(site.getProductClass()).get(0).attr("href"));
-                        
-            String value = values.get(0).text();
-            
-            searchProduct(product, site.getProductLink() ,site);
-            
-            Timestamp ts = new Timestamp(System.currentTimeMillis());  
-            Date date=new Date(ts.getTime());  
-            
-            Price price = registerPrice(value, date);
-            
-            SiteProductPrice spp = new SiteProductPrice(site, product, price);
-            siteProductPriceService.save(spp); 
-            products.add(spp);
-            
-    	}
+        if (sites != null) {
+        	for (Site site : sites) {
+        		
+        		query = processQuery(query);
+        		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
+                Elements values = doc.getElementsByClass(site.getTagClass());
+                
+                site.setProductLink(doc.getElementsByClass(site.getProductClass()).get(0).attr("href"));
+                                        
+                String value = values.get(0).text();
+                
+                searchProduct(product, site.getProductLink() ,site);
+                
+                Timestamp ts = new Timestamp(System.currentTimeMillis());  
+                Date date=new Date(ts.getTime());  
+                
+                Price price = registerPrice(value, date);
+                
+                SiteProductPrice spp = new SiteProductPrice(site, product, price);
+                siteProductPriceService.save(spp); 
+                products.add(spp);
+                
+        	}
+        }
 		return products;
 	}
 	
@@ -101,7 +102,7 @@ public class WebScrapingService {
 	}
 	
 	
-	
+	/*
 	
 	@Async
 	@Transactional(readOnly = false)
@@ -130,11 +131,11 @@ public class WebScrapingService {
 		}
 	}	
 	
-	
+	*/
 	
 	
 	private String processQuery(String query) {
-		return query.replace(" ", "-");
+		return query.replace(" ", "-	");
 	}
 	
 	@Transactional(readOnly = false)
