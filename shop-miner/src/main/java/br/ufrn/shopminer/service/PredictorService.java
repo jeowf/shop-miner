@@ -5,7 +5,7 @@ import br.ufrn.shopminer.strategies.LinearRegression;
 import br.ufrn.shopminer.strategies.PolynomialMonthRegression;
 import br.ufrn.shopminer.strategies.Strategy;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 import java.util.Date;
 
@@ -29,7 +29,7 @@ public class PredictorService {
         }
     }
 
-    public void train(ArrayList<Price> prices, int degree) {
+    public void train(List<Price> prices, int degree) {
         this.strategy.train(prices, degree);
     }
 }

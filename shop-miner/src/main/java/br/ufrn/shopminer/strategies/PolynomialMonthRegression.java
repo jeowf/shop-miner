@@ -7,8 +7,9 @@ import br.ufrn.shopminer.model.Price;
 import weka.core.matrix.Matrix;
 import weka.core.matrix.QRDecomposition;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 public class PolynomialMonthRegression implements Comparable<PolynomialMonthRegression> , Strategy{
     private String variableName;  // name of the predictor variable
@@ -30,7 +31,7 @@ public class PolynomialMonthRegression implements Comparable<PolynomialMonthRegr
     //public PolynomialRegression(double[] x, double[] y, int degree) {
       //  this(x, y, degree, "n");
     //}
-    public PolynomialMonthRegression(ArrayList<Price> prices, int degree) {
+    public PolynomialMonthRegression(List<Price> prices, int degree) {
         double[] x = new double[prices.size()];
         double[] y = new double[prices.size()];
 
@@ -44,7 +45,7 @@ public class PolynomialMonthRegression implements Comparable<PolynomialMonthRegr
     }
 
     @Override
-    public void train(ArrayList<Price> prices, int degree) {
+    public void train(List<Price> prices, int degree) {
         double[] x = new double[prices.size()];
         double[] y = new double[prices.size()];
 
