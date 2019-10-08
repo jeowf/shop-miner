@@ -18,6 +18,9 @@ public class FavoriteService {
 	@Autowired
 	private FavoriteRepository favoriteRepository;
 	
+	@Autowired
+	private ScheduleService scheduleService;
+	
 	public List<Favorite> findAll() {
 		return favoriteRepository.findAll();
 	}
@@ -28,6 +31,7 @@ public class FavoriteService {
 	
 	@Transactional(readOnly = false)
 	public Favorite save(Favorite entity) {
+		scheduleService.addTask(entity);
 		return favoriteRepository.save(entity);
 	}
 
