@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import br.ufrn.shopminer.framework.service.core.QueryFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -39,6 +40,7 @@ public class WebScrapingService {
 
 	//@Autowired
 	//private ConfigService configService;
+	QueryFactory factory;
 	
 	@Autowired
 	private ProductService productService;

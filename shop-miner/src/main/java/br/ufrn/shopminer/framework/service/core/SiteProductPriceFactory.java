@@ -1,5 +1,6 @@
-package br.ufrn.shopminer.core;
+package br.ufrn.shopminer.framework.service.core;
 
+import br.ufrn.shopminer.framework.model.Site;
 import br.ufrn.shopminer.model.*;
 
 import java.io.Serializable;
@@ -18,8 +19,8 @@ public class SiteProductPriceFactory extends QueryFactory {
 
         Site site = new Site();
         for ( Attribute a : attributes ) {
-            if ( a.getName().equals("Site") || a.getValue().getClass() == Site.class ){
-                siteProductPrice.setSite( (Site) a.getValue() );
+            if ( a.getName().equals("Site") || a.getValue().getClass() == ExtendedSite.class ){
+                siteProductPrice.setSite( (ExtendedSite) a.getValue() );
             }
 
             else if ( a.getName().equals("Product") || a.getValue().getClass() == Product.class ){

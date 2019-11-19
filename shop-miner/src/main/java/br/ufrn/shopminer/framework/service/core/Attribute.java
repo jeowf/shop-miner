@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.core;
+package br.ufrn.shopminer.framework.service.core;
 
 public class Attribute<T> {
     private String name;

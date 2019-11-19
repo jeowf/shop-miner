@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.core;
+package br.ufrn.shopminer.framework.service.core;
 
 import java.io.Serializable;
 import java.util.List;
