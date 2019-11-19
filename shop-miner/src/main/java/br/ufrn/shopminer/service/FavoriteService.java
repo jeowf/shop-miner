@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 import br.ufrn.shopminer.framework.model.Site;
 import br.ufrn.shopminer.framework.service.ScheduleService;
 import br.ufrn.shopminer.framework.service.SiteService;
+import br.ufrn.shopminer.framework.spec.MinerinConfig;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.repository.FavoriteRepository;
+import br.ufrn.shopminer.service.custom.ShopMinerStrategy;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,7 +53,9 @@ public class FavoriteService {
 	
 	@Transactional(readOnly = false)
 	public Favorite save(Favorite entity) {
-		scheduleService.addTask(entity);
+		//MinerinConfig
+		ShopMinerStrategy ssMinerStrategy = (ShopMinerStrategy)  MinerinConfig.getInstance().getSearchStrategy();
+		ssMinerStrategy.addTask(entity);
 		return favoriteRepository.save(entity);
 	}
 
