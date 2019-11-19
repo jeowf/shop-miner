@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import br.ufrn.shopminer.model.Config;
+import br.ufrn.framework.minerin.model.Config;
+import br.ufrn.framework.minerin.model.Site;
 import br.ufrn.shopminer.model.ExtendedSite;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
-import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.repository.ExtendedSiteRepository;
 

@@ -24,7 +24,7 @@ public class SiteProductPrice implements Serializable {
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "extendedsite_id")
-    private ExtendedSite extendedSite;
+    private ExtendedSite extendedsite;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "product_id")
@@ -37,11 +37,11 @@ public class SiteProductPrice implements Serializable {
     
     
     public ExtendedSite getExtendedSite() {
-		return extendedSite;
+		return extendedsite;
 	}
 
 	public void setExtendedSite(ExtendedSite extendedSite) {
-		this.extendedSite = extendedSite;
+		this.extendedsite = extendedSite;
 	}
 
 	public SiteProductPrice() {}
@@ -55,11 +55,11 @@ public class SiteProductPrice implements Serializable {
 	}
 
 	public ExtendedSite getSite() {
-		return extendedSite;
+		return extendedsite;
 	}
 
 	public void setSite(ExtendedSite site) {
-		this.extendedSite = site;
+		this.extendedsite = site;
 	}
 
 	public Product getProduct() {
@@ -80,7 +80,7 @@ public class SiteProductPrice implements Serializable {
 
 	public SiteProductPrice(ExtendedSite site, Product product, Price price) {
 		super();
-		this.extendedSite = site;
+		this.extendedsite = site;
 		this.product = product;
 		this.price = price;
 	}

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufrn.shopminer.model.Config;
+import br.ufrn.framework.minerin.model.Config;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.ConfigService;

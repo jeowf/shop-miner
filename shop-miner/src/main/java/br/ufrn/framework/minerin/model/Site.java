@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.model;
+package br.ufrn.framework.minerin.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,41 +9,46 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "config")
-public class Config implements Serializable {
+@Table(name = "site")
+public class Site implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name = "name")
+	@Column(name="name")
 	private String name;
 	
-	@Column(name = "description")
-	private String descrition;
+	@Column(name="url")
+	private String url;
 	
 	
-	@OneToMany(mappedBy="config", cascade = CascadeType.ALL)
+	
+	@ManyToOne
+	@JoinColumn(name="config_id")
+	private Config config;
+	
+	@OneToMany(mappedBy="site", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Site> sites;
+	private List<Tag> tags;
 	
-	@OneToMany(mappedBy="config", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Favorite> favorites;
 	
-	public List<Favorite> getFavorites() {
-		return favorites;
+	
+	public List<Tag> getTags() {
+		return tags;
 	}
 
-	public void setFavorites(List<Favorite> favorites) {
-		this.favorites = favorites;
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	public Integer getId() {
@@ -62,19 +67,20 @@ public class Config implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescrition() {
-		return descrition;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setDescrition(String descrition) {
-		this.descrition = descrition;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public List<Site> getSites() {
-		return sites;
+
+	public Config getConfig() {
+		return config;
 	}
 
-	public void setSites(List<Site> sites) {
-		this.sites = sites;
-	}
+	public void setConfig(Config config) {
+		this.config = config;
+	} 
 }

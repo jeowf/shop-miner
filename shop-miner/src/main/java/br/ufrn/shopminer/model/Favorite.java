@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
+import br.ufrn.framework.minerin.model.Config;
+
 
 
 @Entity

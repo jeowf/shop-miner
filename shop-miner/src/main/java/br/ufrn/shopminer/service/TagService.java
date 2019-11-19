@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufrn.shopminer.model.Tag;
+import br.ufrn.framework.minerin.model.Tag;
 import br.ufrn.shopminer.repository.TagRepository;
 
 @Service

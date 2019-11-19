@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.model;
+package br.ufrn.framework.minerin.model;
 
 import java.io.Serializable;
 
@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tag")
@@ -24,6 +26,7 @@ public class Tag implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="site_id")
+	//@JsonIgnore
 	private Site site;
 
 	public Integer getId() {

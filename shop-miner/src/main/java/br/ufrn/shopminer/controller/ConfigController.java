@@ -1,7 +1,7 @@
 package br.ufrn.shopminer.controller;
 
-import br.ufrn.shopminer.model.Config;
-import br.ufrn.shopminer.model.Site;
+import br.ufrn.framework.minerin.model.Config;
+import br.ufrn.framework.minerin.model.Site;
 //import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.service.ConfigService;
 import io.swagger.annotations.Api;
