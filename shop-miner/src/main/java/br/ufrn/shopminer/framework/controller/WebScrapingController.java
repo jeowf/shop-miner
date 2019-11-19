@@ -1,6 +1,7 @@
 package br.ufrn.shopminer.framework.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +48,14 @@ public class WebScrapingController {
 	
 	@GetMapping("/search/{config}/{query}")
 	@ApiOperation(value = "Returns a list of Product")
-	public ResponseEntity<List<SiteProductPrice>> search(@PathVariable("config") Integer configId, 
+	public ResponseEntity<List<Serializable>> search(@PathVariable("config") Integer configId, 
 												@PathVariable("query") String query){
 		
-		List<SiteProductPrice> products;
-		ResponseEntity<List<SiteProductPrice>> re;
+		List<Serializable> products = null;
+		ResponseEntity<List<Serializable>> re;
 
 		try {
-			products = wsService.search(configService.findOne(configId).get(), query);
+			products = (List<Serializable>) wsService.search(configService.findOne(configId).get(), query);
 			re = new ResponseEntity<> (products, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);

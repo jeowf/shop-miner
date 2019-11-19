@@ -3,10 +3,11 @@ package br.ufrn.shopminer.framework.service.core;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class QueryFactory {
-    protected List<Attribute> attributes;
-    public QueryFactory(List<Attribute> attributes) {
-        this.attributes= attributes;
-    }
-    public abstract Serializable constructResult();
+import org.jsoup.select.Elements;
+
+import br.ufrn.shopminer.framework.model.Site;
+
+public interface QueryFactory {
+	
+    public abstract List<Serializable> constructResult(List<Attribute<Elements>> attributes, Site site, String query);
 }

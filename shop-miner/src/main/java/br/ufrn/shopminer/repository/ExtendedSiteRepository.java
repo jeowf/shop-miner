@@ -17,4 +17,7 @@ public interface ExtendedSiteRepository extends JpaRepository<ExtendedSite, Inte
 	@Query( value="select * from extended_site e where e.config = :cid", nativeQuery = true)
 	List<ExtendedSite> findAllByConfig(@Param("cid") Integer cid);
 	
+	@Query( value="select * from extended_site e where e.site = :sid", nativeQuery = true)
+	List<ExtendedSite> findAllBySiteId(@Param("sid") Integer cid);
+	
 }

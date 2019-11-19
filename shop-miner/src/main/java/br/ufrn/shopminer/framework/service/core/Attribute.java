@@ -19,4 +19,12 @@ public class Attribute<T> {
     public void setValue(T value) {
         this.value = value;
     }
+
+	public Attribute(String name, T value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+    
+    
 }
