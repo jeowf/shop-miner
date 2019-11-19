@@ -20,11 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.ufrn.shopminer.model.Config;
+import br.ufrn.shopminer.model.ExtendedSite;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.model.SiteProductPrice;
+import br.ufrn.shopminer.repository.ExtendedSiteRepository;
 
 import java.sql.Timestamp;
 
@@ -41,37 +43,52 @@ public class WebScrapingService {
 	@Autowired
 	private PriceService priceService;
 	
+
+	
 	@Autowired
 	private SiteProductPriceService siteProductPriceService;
+	
+	
+	@Autowired
+	private ExtendedSiteRepository esr;
+	
+	@Autowired
+	private SiteService siteService;
 	
 	private boolean started = false;
 	
 	@Transactional(readOnly = false)
 	public List<SiteProductPrice> search(Config config, String query) throws IOException{
         ArrayList<SiteProductPrice> products = new ArrayList<SiteProductPrice>();
-        List<Site> sites = config.getSites();
+        //List<Site> sites = config.getSites();
     
+        List<ExtendedSite> esites = esr.findAllByConfig(config.getId());
+        
         Product product = findProduct(query);
 
-        if (sites != null) {
-        	for (Site site : sites) {
+        if (esites != null) {
+        	
+        	for (ExtendedSite esite : esites) {
         		
         		query = processQuery(query);
+        		
+        		Site site = siteService.findOne(esite.getSite()).get();
+        		
         		Document doc = Jsoup.connect(site.getUrl().replace("{}", query)).get();
-                Elements values = doc.getElementsByClass(site.getTagClass());
+                Elements values = doc.getElementsByClass(esite.getTagClass());
                 
-                site.setProductLink(doc.getElementsByClass(site.getProductClass()).get(0).attr("href"));
+                esite.setProductLink(doc.getElementsByClass(esite.getProductClass()).get(0).attr("href"));
                                         
                 String value = values.get(0).text();
                 
-                searchProduct(product, site.getProductLink() ,site);
+                searchProduct(product, esite.getProductLink() ,esite);
                 
                 Timestamp ts = new Timestamp(System.currentTimeMillis());  
                 Date date=new Date(ts.getTime());  
                 
                 Price price = registerPrice(value, date);
                 
-                SiteProductPrice spp = new SiteProductPrice(site, product, price);
+                SiteProductPrice spp = new SiteProductPrice(esite, product, price);
                 siteProductPriceService.save(spp); 
                 products.add(spp);
                 
@@ -82,15 +99,15 @@ public class WebScrapingService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Product searchProduct(Product product, String query, Site site) throws IOException{
+	public Product searchProduct(Product product, String query, ExtendedSite esite) throws IOException{
 		
 		    product = findProduct(product.getName());
         		
         	Document doc = Jsoup.connect(query).get();                        
             
-            product.setImg(doc.getElementsByClass(site.getImgClass()).get(0).attr("href"));
+            product.setImg(doc.getElementsByClass(esite.getImgClass()).get(0).attr("href"));
                         
-            product.setDescription(doc.getElementsByClass(site.getDescriptionClass()).get(0).text());
+            product.setDescription(doc.getElementsByClass(esite.getDescriptionClass()).get(0).text());
 			
     	
 		return product;
@@ -143,7 +160,6 @@ public class WebScrapingService {
 		if (product == null) {
 			Product p = new Product();
 			p.setName(name);
-			System.out.println("cu");
 			
 			product = productService.save(p);
 		}

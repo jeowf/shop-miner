@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufrn.shopminer.model.ExtendedSite;
+import br.ufrn.shopminer.model.Site;
 import br.ufrn.shopminer.repository.ExtendedSiteRepository;
 import br.ufrn.shopminer.repository.SiteRepository;
 
@@ -17,11 +18,14 @@ import br.ufrn.shopminer.repository.SiteRepository;
 public class ExtendedSiteService {
 	
 	@Autowired
-	private ExtendedSiteRepository extendedSiteRepository;
-	
+	private ExtendedSiteRepository extendedSiteRepository;	
 	
 	@Autowired
-	private SiteRepository siteRepository;
+	private SiteService siteService;
+	
+	
+	
+	
 	
 	public List<ExtendedSite> findAll() {
 		return extendedSiteRepository.findAll();
@@ -33,7 +37,10 @@ public class ExtendedSiteService {
 	
 	@Transactional(readOnly = false)
 	public ExtendedSite save(ExtendedSite entity) {
-		//siteRepository.save(entity.getSite());
+		Site site = siteService.findOne(entity.getSite()).get();
+		
+		entity.setConfig(site.getConfig().getId());
+		
 		return extendedSiteRepository.save(entity);
 	}
 

@@ -3,6 +3,7 @@ package br.ufrn.shopminer.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,8 @@ public class SiteProductPrice implements Serializable {
 	private Integer id;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "site_id")
-    private Site site;
+    @JoinColumn(name = "extendedsite_id")
+    private ExtendedSite extendedSite;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "product_id")
@@ -33,7 +34,17 @@ public class SiteProductPrice implements Serializable {
     @JoinColumn(name = "price_id")
     private Price price;
     
-    public SiteProductPrice() {}
+    
+    
+    public ExtendedSite getExtendedSite() {
+		return extendedSite;
+	}
+
+	public void setExtendedSite(ExtendedSite extendedSite) {
+		this.extendedSite = extendedSite;
+	}
+
+	public SiteProductPrice() {}
 
 	public Integer getId() {
 		return id;
@@ -43,12 +54,12 @@ public class SiteProductPrice implements Serializable {
 		this.id = id;
 	}
 
-	public Site getSite() {
-		return site;
+	public ExtendedSite getSite() {
+		return extendedSite;
 	}
 
-	public void setSite(Site site) {
-		this.site = site;
+	public void setSite(ExtendedSite site) {
+		this.extendedSite = site;
 	}
 
 	public Product getProduct() {
@@ -67,9 +78,9 @@ public class SiteProductPrice implements Serializable {
 		this.price = price;
 	}
 
-	public SiteProductPrice(Site site, Product product, Price price) {
+	public SiteProductPrice(ExtendedSite site, Product product, Price price) {
 		super();
-		this.site = site;
+		this.extendedSite = site;
 		this.product = product;
 		this.price = price;
 	}
