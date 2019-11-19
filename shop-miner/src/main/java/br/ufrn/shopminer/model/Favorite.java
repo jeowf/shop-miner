@@ -68,6 +68,16 @@ public class Favorite implements Serializable{
 		this.rateInteger = rateInteger;
 	}
 
+	public Favorite(Integer id, Config config, String value, Integer rateInteger) {
+		super();
+		this.id = id;
+		this.config = config;
+		this.value = value;
+		this.rateInteger = rateInteger;
+	}
+	
+	
+
 	
 	
 }

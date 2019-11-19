@@ -50,16 +50,28 @@ public class ShopMinerStrategy implements SearchStrategy {
 	private void init() {
 		
 		tasks = new PriorityQueue<Pair<Favorite>>();
+		
+		/*
+
+		tasks.add( new Pair<Favorite>(3, 3, new Favorite(0, null, "rx 550", 10)) );
+		tasks.add( new Pair<Favorite>(10, 10, new Favorite(0, null, "gtx 1060", 20)) );
+		tasks.add( new Pair<Favorite>(20, 20, new Favorite(0, null, "gt 1030", 30)) );
+		tasks.add( new Pair<Favorite>(12, 12, new Favorite(0, null, "gtx 1080", 12)) );
+		tasks.add( new Pair<Favorite>(16, 16, new Favorite(0, null, "quadro k620", 15)) );*/
 
 	}
 	
 	private void executeCurrentQueries(WebScrapingService ws) {
 
+		System.out.println("Current time: " + currentTime + "s");
 		
 		while (!tasks.isEmpty() && tasks.peek().time <= currentTime) {
 
 			Pair<Favorite> p = tasks.poll();
-			System.out.println(p.value.getValue());
+			//System.out.println(p.value.getValue());
+			
+
+			
 			
 			try {
 				ws.search(p.value.getConfig(), p.value.getValue());
