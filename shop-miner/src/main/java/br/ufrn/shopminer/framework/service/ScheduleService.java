@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.service;
+package br.ufrn.shopminer.framework.service;
 
 import java.io.IOException;
 import java.util.Comparator;

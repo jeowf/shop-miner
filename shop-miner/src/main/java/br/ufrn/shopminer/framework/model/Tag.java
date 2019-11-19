@@ -1,4 +1,4 @@
-package br.ufrn.framework.minerin.model;
+package br.ufrn.shopminer.framework.model;
 
 import java.io.Serializable;
 

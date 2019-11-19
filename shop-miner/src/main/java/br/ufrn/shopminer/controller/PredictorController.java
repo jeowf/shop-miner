@@ -1,6 +1,6 @@
 package br.ufrn.shopminer.controller;
 
-import br.ufrn.framework.minerin.model.Site;
+import br.ufrn.shopminer.framework.model.Site;
 import br.ufrn.shopminer.model.*;
 import br.ufrn.shopminer.service.FavoriteService;
 import br.ufrn.shopminer.service.PredictorService;

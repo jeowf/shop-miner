@@ -1,6 +1,6 @@
 package br.ufrn.shopminer.service;
 
-import br.ufrn.framework.minerin.model.Site;
+import br.ufrn.shopminer.framework.model.Site;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.strategies.PolynomialMonthRegression;

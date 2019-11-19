@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.controller;
+package br.ufrn.shopminer.framework.controller;
 
 
 import java.util.List;
@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufrn.framework.minerin.model.Site;
-import br.ufrn.shopminer.service.SiteService;
+import br.ufrn.shopminer.framework.model.Tag;
+import br.ufrn.shopminer.framework.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api")
-@Api(value = "API REST Site")
+@Api(value = "API REST Tag")
 @CrossOrigin(origins="*")
-public class SiteController {
+public class TagController {
 	
 	@Autowired
-	private SiteService siteService;
+	private TagService tagService;
 	
 	
-	@GetMapping("/site")
-	@ApiOperation(value = "Returns a list of Site")
-	public ResponseEntity<List<Site>> getSites() {
-		List<Site> sites;
-		ResponseEntity<List<Site>> re;
+	@GetMapping("/tag")
+	@ApiOperation(value = "Returns a list of Tag")
+	public ResponseEntity<List<Tag>> getTags() {
+		List<Tag> tags;
+		ResponseEntity<List<Tag>> re;
 		
 		try {
-			sites = siteService.findAll();
-			re = new ResponseEntity<> (sites, HttpStatus.OK);
+			tags = tagService.findAll();
+			re = new ResponseEntity<> (tags, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
@@ -47,15 +47,15 @@ public class SiteController {
 		return re;
 	}
 	
-	@GetMapping("/site/{id}")
-	@ApiOperation(value = "Returns a Site by id")
-	public ResponseEntity<Site> getSite(@PathVariable("id") Integer id) {
-		Site site;
-		ResponseEntity<Site> re;
+	@GetMapping("/tag/{id}")
+	@ApiOperation(value = "Returns a Tag by id")
+	public ResponseEntity<Tag> getTag(@PathVariable("id") Integer id) {
+		Tag tag;
+		ResponseEntity<Tag> re;
 		
 		try {
-			site = siteService.findOne(id).get();
-			re = new ResponseEntity<> (site, HttpStatus.OK);
+			tag = tagService.findOne(id).get();
+			re = new ResponseEntity<> (tag, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
@@ -63,16 +63,16 @@ public class SiteController {
 		return re;
 	}
 	
-	@PostMapping("/site")
-	@ApiOperation(value = "Saves a new Site")
-	public ResponseEntity<Site> postSite(@RequestBody Site site){
-		ResponseEntity<Site> re;
+	@PostMapping("/tag")
+	@ApiOperation(value = "Saves a new Tag")
+	public ResponseEntity<Tag> postTag(@RequestBody Tag tag){
+		ResponseEntity<Tag> re;
 		
 		//re = new ResponseEntity<>(null, HttpStatus.OK);
 		
 		try {
-			siteService.save(site);
-			re = new ResponseEntity<> (site, HttpStatus.OK);
+			tagService.save(tag);
+			re = new ResponseEntity<> (tag, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
 		}
@@ -80,15 +80,15 @@ public class SiteController {
 		return re;
 	}
 	
-	//@PutMapping("/site")
-	@DeleteMapping("/site")
-	@ApiOperation(value = "Deletes a Site")
-	public ResponseEntity<Site> deleteSite(@RequestBody Site site){
-		ResponseEntity<Site> re;
+	//@PutMapping("/tag")
+	@DeleteMapping("/tag")
+	@ApiOperation(value = "Deletes a Tag")
+	public ResponseEntity<Tag> deleteTag(@RequestBody Tag tag){
+		ResponseEntity<Tag> re;
 		
 		try {
-			siteService.delete(site);
-			re = new ResponseEntity<> (site, HttpStatus.OK);
+			tagService.delete(tag);
+			re = new ResponseEntity<> (tag, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
 		}
@@ -97,14 +97,14 @@ public class SiteController {
 		
 	}
 	
-	@PutMapping("/site")
-	@ApiOperation(value = "Updates a Site")
-	public ResponseEntity<Site> putSite(@RequestBody Site site){
-		ResponseEntity<Site> re;
+	@PutMapping("/tag")
+	@ApiOperation(value = "Updates a Tag")
+	public ResponseEntity<Tag> putTag(@RequestBody Tag tag){
+		ResponseEntity<Tag> re;
 
 		try {
-			siteService.save(site);
-			re = new ResponseEntity<> (site, HttpStatus.OK);
+			tagService.save(tag);
+			re = new ResponseEntity<> (tag, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
 		}

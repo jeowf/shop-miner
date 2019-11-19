@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
-import br.ufrn.framework.minerin.model.Config;
+import br.ufrn.shopminer.framework.model.Config;
 
 
 

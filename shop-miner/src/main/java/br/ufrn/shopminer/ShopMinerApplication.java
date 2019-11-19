@@ -17,7 +17,7 @@ public class ShopMinerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShopMinerApplication.class, args);
 	}
-	
+	/*
 	@Bean
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -27,6 +27,6 @@ public class ShopMinerApplication {
         executor.setThreadNamePrefix("shopminer-");
         executor.initialize();
         return executor;
-    }
+    }*/
 
 }

@@ -10,7 +10,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufrn.framework.minerin.model.Site;
+import br.ufrn.shopminer.framework.model.Site;
+import br.ufrn.shopminer.framework.service.ScheduleService;
+import br.ufrn.shopminer.framework.service.SiteService;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;

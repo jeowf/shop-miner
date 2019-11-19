@@ -1,6 +1,7 @@
 package br.ufrn.shopminer.controller;
 
-import br.ufrn.framework.minerin.model.Site;
+import br.ufrn.shopminer.framework.model.Site;
+import br.ufrn.shopminer.framework.service.SiteService;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
@@ -9,7 +10,6 @@ import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.FavoriteService;
 import br.ufrn.shopminer.service.ProductService;
 import br.ufrn.shopminer.service.SiteProductPriceService;
-import br.ufrn.shopminer.service.SiteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.service;
+package br.ufrn.shopminer.framework.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufrn.framework.minerin.model.Site;
-import br.ufrn.shopminer.repository.SiteRepository;
+import br.ufrn.shopminer.framework.model.Site;
+import br.ufrn.shopminer.framework.repository.SiteRepository;
 
 @Service
 @Transactional(readOnly = true)

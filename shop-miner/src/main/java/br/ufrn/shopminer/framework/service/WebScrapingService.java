@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.service;
+package br.ufrn.shopminer.framework.service;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -19,14 +19,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import br.ufrn.framework.minerin.model.Config;
-import br.ufrn.framework.minerin.model.Site;
+import br.ufrn.shopminer.framework.model.Config;
+import br.ufrn.shopminer.framework.model.Site;
 import br.ufrn.shopminer.model.ExtendedSite;
 import br.ufrn.shopminer.model.Favorite;
 import br.ufrn.shopminer.model.Price;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.repository.ExtendedSiteRepository;
+import br.ufrn.shopminer.service.PriceService;
+import br.ufrn.shopminer.service.ProductService;
+import br.ufrn.shopminer.service.SiteProductPriceService;
 
 import java.sql.Timestamp;
 

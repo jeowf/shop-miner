@@ -1,4 +1,4 @@
-package br.ufrn.shopminer.controller;
+package br.ufrn.shopminer.framework.controller;
 
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufrn.framework.minerin.model.Config;
+import br.ufrn.shopminer.framework.model.Config;
+import br.ufrn.shopminer.framework.service.ConfigService;
+import br.ufrn.shopminer.framework.service.SiteService;
+import br.ufrn.shopminer.framework.service.WebScrapingService;
 import br.ufrn.shopminer.model.Product;
 import br.ufrn.shopminer.model.SiteProductPrice;
-import br.ufrn.shopminer.service.ConfigService;
 import br.ufrn.shopminer.service.ProductService;
 import br.ufrn.shopminer.service.SiteProductPriceService;
-import br.ufrn.shopminer.service.SiteService;
-import br.ufrn.shopminer.service.WebScrapingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
