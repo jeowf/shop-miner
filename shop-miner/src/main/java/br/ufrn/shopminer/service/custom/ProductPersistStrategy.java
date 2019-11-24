@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.ufrn.shopminer.framework.service.core.PersistStrategy;
 import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.SiteProductPriceService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductPersistStrategy implements PersistStrategy{
 	
 	@Autowired
@@ -26,7 +28,5 @@ public class ProductPersistStrategy implements PersistStrategy{
 		}
 		
 	}
-	
-	
 
 }

@@ -3,11 +3,9 @@ package br.ufrn.shopminer.framework.spec;
 import br.ufrn.shopminer.framework.service.core.PersistStrategy;
 import br.ufrn.shopminer.framework.service.core.QueryFactory;
 import br.ufrn.shopminer.framework.service.core.SearchStrategy;
-import br.ufrn.shopminer.service.custom.ProductPersistStrategy;
-import br.ufrn.shopminer.service.custom.ShopMinerStrategy;
-import br.ufrn.shopminer.service.custom.SiteProductPriceFactory;
+import br.ufrn.shopminer.service.custom.*;
 
-public class MinerinConfig { 
+public class MinerinConfig {
 
     private static MinerinConfig single_instance = null; 
   
@@ -18,11 +16,14 @@ public class MinerinConfig {
   
     // private constructor restricted to this class itself 
     private MinerinConfig() 
-    { 
-        searchStrategy = new ShopMinerStrategy();
-        persistStrategy = new ProductPersistStrategy();
-        queryFactory = new SiteProductPriceFactory();
-    } 
+    {
+        //searchStrategy = new ShopMinerStrategy();
+        searchStrategy = new TTMinerStrategy();
+        //persistStrategy = new ProductPersistStrategy();
+        persistStrategy = new TTPersistStrategy();
+        //queryFactory = new SiteProductPriceFactory();
+        queryFactory = new TrendingTopicsFactory();
+    }
   
     // static method to create instance of MinerinConfig class 
     public static MinerinConfig getInstance() 
