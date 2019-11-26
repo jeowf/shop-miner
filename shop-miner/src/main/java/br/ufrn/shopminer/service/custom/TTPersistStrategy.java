@@ -42,4 +42,9 @@ public class TTPersistStrategy implements PersistStrategy {
 		
 	}
 
+	//@Bean
+	//TTPersistStrategy TTPersistStrategy(){
+	//	return new TTPersistStrategy();
+	//}
+
 }

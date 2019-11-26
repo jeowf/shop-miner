@@ -21,7 +21,8 @@ public class ScheduleService {
 	
 	@Autowired
 	private WebScrapingService ws;
-	
+
+	@Autowired
 	private SearchStrategy ss;
 		
 

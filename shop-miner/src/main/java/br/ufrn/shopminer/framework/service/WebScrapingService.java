@@ -41,7 +41,9 @@ import java.sql.Timestamp;
 public class WebScrapingService {
 
 
+	@Autowired
 	private QueryFactory queryFactory;
+	@Autowired
 	private PersistStrategy persistStrategy;
 	
 	

@@ -10,7 +10,7 @@ import br.ufrn.shopminer.model.SiteProductPrice;
 import br.ufrn.shopminer.service.SiteProductPriceService;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ProductPersistStrategy implements PersistStrategy{
 	
 	@Autowired

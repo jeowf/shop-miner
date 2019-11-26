@@ -6,6 +6,7 @@ import br.ufrn.shopminer.framework.model.Tag;
 import br.ufrn.shopminer.framework.service.WebScrapingService;
 import br.ufrn.shopminer.framework.service.core.SearchStrategy;
 import br.ufrn.shopminer.model.Favorite;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 //import jdk.javadoc.internal.doclets.formats.html.markup.Table;
 
@@ -127,5 +128,10 @@ public class TTMinerStrategy implements SearchStrategy {
 		currentTime++;
 		
 	}
+
+	//@Bean
+	//public TTMinerStrategy TTMinerStrategy(){
+	//	return new TTMinerStrategy();
+	//}
 
 }
