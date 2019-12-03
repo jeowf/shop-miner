@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import br.ufrn.shopminer.model.Site;
@@ -25,7 +26,7 @@ public class TTController {
 	private TrendingTopicsService trendingTopicsService;
 
 	@GetMapping("/trendingTopics")
-	@ApiOperation(value = "Returns a list of Topics")
+	@ApiOperation(value = "Returns a list of All Topics")
 	public ResponseEntity<List<TrendingTopics>> getTopics() {
 		List<TrendingTopics> trendingTopics;
 		ResponseEntity<List<TrendingTopics>> re;
@@ -41,7 +42,7 @@ public class TTController {
 	}
 
 	@GetMapping("/trendingTopics/{location}")
-	@ApiOperation(value = "Returns a list of Topics")
+	@ApiOperation(value = "Returns a list of TrendingTopics by location")
 	public ResponseEntity<List<TrendingTopics>> getTopicsBylocation(@PathVariable("location") String location) {
 		List<TrendingTopics> trendingTopics;
 		ResponseEntity<List<TrendingTopics>> re;
@@ -55,7 +56,33 @@ public class TTController {
 
 		return re;
 	}
-	@GetMapping("/tts/{id}")
+
+	@GetMapping("/subject/{word}")
+	@ApiOperation(value = "Returns a list of Topics")
+	public ResponseEntity<List<TrendingTopics>> getTopicsBySubject(@PathVariable("word") String subject) {
+		List<TrendingTopics> trendingTopics;
+		List<TrendingTopics> trendingTopicsAnswer = new ArrayList<>();
+		ResponseEntity<List<TrendingTopics>> re;
+
+		try {
+			trendingTopics = trendingTopicsService.findAll();
+			for ( TrendingTopics tts : trendingTopics ) {
+				for ( Topic topic : tts.getTopics() ){
+					if ( topic.getSubject().toLowerCase().equals(subject.toLowerCase()) ) {
+					    trendingTopicsAnswer.add( tts );
+					    break;
+					}
+				}
+			}
+			re = new ResponseEntity<List<TrendingTopics>> (trendingTopicsAnswer, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+
+		return re;
+	}
+
+	@GetMapping("/trendingTopics/id/{id}")
 	@ApiOperation(value = "Returns a Topic by id")
 	public ResponseEntity<List<Topic>> getTopic(@PathVariable("id") Integer id) {
 		TrendingTopics trendingTopics;
