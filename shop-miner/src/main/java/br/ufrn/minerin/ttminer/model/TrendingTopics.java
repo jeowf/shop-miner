@@ -44,11 +44,11 @@ public class TrendingTopics implements Serializable, Comparable<TrendingTopics> 
 		this.location = location;
 	}
 
-	public Timestamp getTimestamp() {
-		return (Timestamp) timestamp;
+	public Date getTimestamp() {
+		return (Date) timestamp;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

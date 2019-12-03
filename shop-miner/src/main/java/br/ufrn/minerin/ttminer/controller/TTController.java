@@ -1,7 +1,8 @@
 package br.ufrn.minerin.ttminer.controller;
 
-import br.ufrn.minerin.shopminer.model.Price;
-import br.ufrn.minerin.shopminer.service.PriceService;
+import br.ufrn.minerin.ttminer.model.Topic;
+import br.ufrn.minerin.ttminer.model.TrendingTopics;
+import br.ufrn.minerin.ttminer.service.TrendingTopicsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,17 @@ import java.util.List;
 public class TTController {
 	
 	@Autowired
-	private PriceService priceService;
+	private TrendingTopicsService trendingTopicsService;
 
-	@GetMapping("/tts")
-	@ApiOperation(value = "Returns a list of Price")
-	public ResponseEntity<List<Price>> getPrices() {
-		List<Price> configs;
-		ResponseEntity<List<Price>> re;
+	@GetMapping("/trendingTopics")
+	@ApiOperation(value = "Returns a list of Topics")
+	public ResponseEntity<List<TrendingTopics>> getTopics() {
+		List<TrendingTopics> trendingTopics;
+		ResponseEntity<List<TrendingTopics>> re;
 
 		try {
-			configs = priceService.findAll();
-			re = new ResponseEntity<> (configs, HttpStatus.OK);
+			trendingTopics = trendingTopicsService.findAll();
+			re = new ResponseEntity<List<TrendingTopics>> (trendingTopics, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
@@ -39,15 +40,30 @@ public class TTController {
 		return re;
 	}
 
+	@GetMapping("/trendingTopics/{location}")
+	@ApiOperation(value = "Returns a list of Topics")
+	public ResponseEntity<List<TrendingTopics>> getTopicsBylocation(@PathVariable("location") String location) {
+		List<TrendingTopics> trendingTopics;
+		ResponseEntity<List<TrendingTopics>> re;
+
+		try {
+			trendingTopics = trendingTopicsService.findAllByLocation(location);
+			re = new ResponseEntity<List<TrendingTopics>> (trendingTopics, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+
+		return re;
+	}
 	@GetMapping("/tts/{id}")
-	@ApiOperation(value = "Returns a Price by id")
-	public ResponseEntity<Price> getPrice(@PathVariable("id") Integer id) {
-		Price price;
-		ResponseEntity<Price> re;
+	@ApiOperation(value = "Returns a Topic by id")
+	public ResponseEntity<List<Topic>> getTopic(@PathVariable("id") Integer id) {
+		TrendingTopics trendingTopics;
+		ResponseEntity<List<Topic>> re;
 		
 		try {
-			price = priceService.findOne(id).get();
-			re = new ResponseEntity<> (price, HttpStatus.FOUND);
+			trendingTopics = trendingTopicsService.findOne(id).get();
+			re = new ResponseEntity<List<Topic>> (trendingTopics.getTopics(), HttpStatus.FOUND);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
@@ -55,48 +71,33 @@ public class TTController {
 		return re;
 	}
 	
-	@PostMapping("/tts")
-	@ApiOperation(value = "Saves a new Price")
-	public ResponseEntity<Price> postPrice(@RequestBody Price price){
-		ResponseEntity<Price> re;
-		
-		try {
-			priceService.save(price);
-			re = new ResponseEntity<> (price, HttpStatus.OK);
-		} catch (Exception e) {
-			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
-		}
-		
-		return re;
-	}
+	//@DeleteMapping("/tts")
+	//@ApiOperation(value = "Deletes a Topic")
+	//public ResponseEntity<Topic> deleteTopic(@RequestBody Topic price){
+	//	ResponseEntity<Topic> re;
 
-	@DeleteMapping("/tts")
-	@ApiOperation(value = "Deletes a Price")
-	public ResponseEntity<Price> deletePrice(@RequestBody Price price){
-		ResponseEntity<Price> re;
+	//	try {
+	//		trendingTopicsService.delete(price);
+	//		re = new ResponseEntity<> (price, HttpStatus.OK);
+	//	} catch (Exception e) {
+	//		re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+	//	}
 
-		try {
-			priceService.delete(price);
-			re = new ResponseEntity<> (price, HttpStatus.OK);
-		} catch (Exception e) {
-			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
-		}
+	//	return re;
 
-		return re;
+	//}
+	//@PutMapping("/tts")
+	//@ApiOperation(value = "Updates a Topic")
+	//public ResponseEntity<Topic> putTopic(@RequestBody Topic price){
+	//	ResponseEntity<Topic> re;
 
-	}
-	@PutMapping("/tts")
-	@ApiOperation(value = "Updates a Price")
-	public ResponseEntity<Price> putPrice(@RequestBody Price price){
-		ResponseEntity<Price> re;
+	//	try {
+	//		trendingTopicsService.save(price);
+	//		re = new ResponseEntity<> (price, HttpStatus.OK);
+	//	} catch (Exception e) {
+	//		re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
+	//	}
 
-		try {
-			priceService.save(price);
-			re = new ResponseEntity<> (price, HttpStatus.OK);
-		} catch (Exception e) {
-			re = new ResponseEntity<> (null, HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		return re;
-	}
+	//	return re;
+	//}
 }

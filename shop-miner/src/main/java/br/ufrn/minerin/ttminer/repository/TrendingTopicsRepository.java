@@ -5,9 +5,13 @@ import br.ufrn.minerin.ttminer.model.TrendingTopics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TrendingTopicsRepository extends JpaRepository<TrendingTopics, Integer> {
 
-	SiteProductPrice findById(int id);
+	TrendingTopics findById(int id);
+
+	List<TrendingTopics> findAllByLocation(String location);
 	
 }

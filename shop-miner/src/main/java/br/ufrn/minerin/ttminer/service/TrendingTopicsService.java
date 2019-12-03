@@ -18,7 +18,11 @@ public class TrendingTopicsService {
 	public List<TrendingTopics> findAll() {
 		return trendingTopicsRepository.findAll();
 	}
-	
+
+	public List<TrendingTopics> findAllByLocation(String location){
+		return trendingTopicsRepository.findAllByLocation(location);
+	}
+
 	public Optional<TrendingTopics> findOne(Integer id) {
 		return trendingTopicsRepository.findById(id);
 	}

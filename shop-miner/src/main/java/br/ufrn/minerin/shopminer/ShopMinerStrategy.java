@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
 public class ShopMinerStrategy implements SearchStrategy {
 
 	private class Pair<T> implements Comparable<Pair<T>>{

@@ -4,12 +4,14 @@ import br.ufrn.minerin.framework.service.core.PersistStrategy;
 import br.ufrn.minerin.ttminer.model.TrendingTopics;
 import br.ufrn.minerin.ttminer.service.TrendingTopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Component
+@Primary
 public class TTPersistStrategy implements PersistStrategy {
 
 	@Autowired

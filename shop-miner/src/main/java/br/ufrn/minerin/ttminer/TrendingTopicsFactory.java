@@ -8,9 +8,6 @@ import br.ufrn.minerin.shopminer.repository.ExtendedSiteRepository;
 import br.ufrn.minerin.shopminer.service.PriceService;
 import br.ufrn.minerin.shopminer.service.ProductService;
 import br.ufrn.minerin.shopminer.service.SiteProductPriceService;
-import br.ufrn.minerin.shopminer.model.ExtendedSite;
-import br.ufrn.minerin.shopminer.model.Price;
-import br.ufrn.minerin.shopminer.model.Product;
 import br.ufrn.minerin.ttminer.model.Topic;
 import br.ufrn.minerin.ttminer.model.TrendingTopics;
 import br.ufrn.minerin.ttminer.service.TrendingTopicsService;
@@ -19,17 +16,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Component
+@Primary
 public class TrendingTopicsFactory implements QueryFactory {
 
     @Autowired
@@ -44,14 +43,12 @@ public class TrendingTopicsFactory implements QueryFactory {
 	@Autowired
 	private SiteProductPriceService siteProductPriceService;
 
-
 	@Autowired
 	private ExtendedSiteRepository esr;
 	
 	@Autowired
 	private SiteService siteService;
-	
-	
+
     @Override
     public List<Serializable> constructResult(List<Attribute<Elements>> attributes, Site site, String query) {
 
@@ -60,11 +57,13 @@ public class TrendingTopicsFactory implements QueryFactory {
 		ArrayList<Element> els = attributes.get(0).getValue();
 
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		Calendar c = Calendar.getInstance();
 		Date date=new Date(ts.getTime());
+		c.setTime(date);
 
 		for (Element e : els) {
-			Timestamp ts_new = new Timestamp(ts.getTime());
 			TrendingTopics trendingTopics = new TrendingTopics();
+			trendingTopics.setTimestamp(c.getTime());
 
 			ArrayList<Topic> topics = new ArrayList<>();
 
@@ -79,67 +78,20 @@ public class TrendingTopicsFactory implements QueryFactory {
 				topics.add(topic);
 			}
 
-			trendingTopics.setTimestamp(ts_new);
-			trendingTopics.setLocation("worldwide");
+			trendingTopics.setLocation(site.getTags().get(0).getName().replaceAll(".*/",""));
+			site.getTags().get(0).getName();
 			trendingTopics.setTopics(topics);
 
 			tts.add(trendingTopics);
-			ts.setHours(ts.getHours() - 1);
+			String hours = ts.toString().replaceAll("T",""); // 2019-12-03T03:51:43.478+0000
+			c.add(Calendar.HOUR_OF_DAY, -1);
 		}
 		return tts;
 
     }
-    
-    @Transactional(readOnly = false)
-	public Product searchProduct(Product product, String query, ExtendedSite esite) throws IOException{
-		
-		    product = findProduct(product.getName());
-        		
-        	Document doc = Jsoup.connect(query).get();                        
-            
-            product.setImg(doc.getElementsByClass(esite.getImgClass()).get(0).attr("href"));
-                        
-            product.setDescription(doc.getElementsByClass(esite.getDescriptionClass()).get(0).text());
-			
-    	
-		return product;
-	}
-	
-	
-	
+
 	private String processQuery(String query) {
 		return query.replace(" ", "-");
 	}
 	
-	private Product findProduct(String name) {
-		
-		Product product = null;
-		
-		product = productService.findByName(name);
-
-		if (product == null) {
-			Product p = new Product();
-			p.setName(name);
-			
-			product = productService.save(p);
-		}
-		
-		return product;
-	}
-	
-	private Price registerPrice(String value, Date date) {
-		Price price = new Price();
-		
-		price.setValue(value);
-		price.setDate(date);
-		
-		priceService.save(price);
-		
-		return price;
-	}
-
-	//@Bean
-	//TrendingTopicsFactory TrendingTopicsFactory(){
-    //	return new TrendingTopicsFactory();
-	//}
 }

@@ -29,7 +29,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@Primary
 public class SiteProductPriceFactory implements QueryFactory {
 
 	@Autowired
