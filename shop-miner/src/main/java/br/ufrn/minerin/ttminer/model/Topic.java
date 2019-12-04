@@ -1,6 +1,9 @@
 package br.ufrn.minerin.ttminer.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 @Entity
@@ -17,6 +20,7 @@ public class Topic implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "trendingtopics_id")
+    @JsonIgnore
     TrendingTopics trendingtopics;
 
     public String getSubject() {

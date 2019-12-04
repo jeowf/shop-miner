@@ -68,7 +68,7 @@ public class TTController {
 			trendingTopics = trendingTopicsService.findAll();
 			for ( TrendingTopics tts : trendingTopics ) {
 				for ( Topic topic : tts.getTopics() ){
-					if ( topic.getSubject().toLowerCase().equals(subject.toLowerCase()) ) {
+					if ( topic.getSubject().toLowerCase().contains(subject.toLowerCase()) ) {
 					    trendingTopicsAnswer.add( tts );
 					    break;
 					}

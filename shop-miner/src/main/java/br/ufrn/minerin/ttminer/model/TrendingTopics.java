@@ -25,7 +25,6 @@ public class TrendingTopics implements Serializable, Comparable<TrendingTopics> 
     private Date timestamp;
 
 	@OneToMany(mappedBy = "trendingtopics", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JsonIgnore
 	private List<Topic> topics;
 
 	public Integer getId() {
