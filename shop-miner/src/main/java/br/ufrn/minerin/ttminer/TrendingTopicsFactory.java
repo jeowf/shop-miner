@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Component
-@Primary
+//@Primary
 public class TrendingTopicsFactory implements QueryFactory {
 
     @Autowired

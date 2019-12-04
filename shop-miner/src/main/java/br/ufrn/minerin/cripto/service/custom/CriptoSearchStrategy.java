@@ -1,4 +1,12 @@
-package br.ufrn.minerin.ttminer;
+package br.ufrn.minerin.cripto.service.custom;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import br.ufrn.minerin.framework.model.Config;
 import br.ufrn.minerin.framework.model.Site;
@@ -6,18 +14,11 @@ import br.ufrn.minerin.framework.model.Tag;
 import br.ufrn.minerin.framework.service.WebScrapingService;
 import br.ufrn.minerin.framework.service.core.SearchStrategy;
 import br.ufrn.minerin.model.Favorite;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
-//import jdk.javadoc.internal.doclets.formats.html.markup.Table;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PriorityQueue;
 
 @Component
-//@Primary
-public class TTMinerStrategy implements SearchStrategy {
+@Primary
+public class CriptoSearchStrategy implements SearchStrategy {
+
 
 	private class Pair<T> implements Comparable<Pair<T>>{
 		public int time;
@@ -52,7 +53,7 @@ public class TTMinerStrategy implements SearchStrategy {
 		Pair<Favorite> f = new Pair<Favorite>(currentTime + favorite.getRateInteger(), favorite.getRateInteger(), favorite);
 		tasks.add(f);
 	}
-
+	
 	private void init() {
 
 		tasks = new PriorityQueue<Pair<Favorite>>();
@@ -70,8 +71,8 @@ public class TTMinerStrategy implements SearchStrategy {
 			tag.setId(0);
 
 			site.setId(0);
-			site.setName("trends24");
-			site.setUrl("https://trends24.in/" + (location.equals("worldwide") ? "" : location));
+			site.setName("investing");
+			site.setUrl("https://br.investing.com/crypto/" + (location.equals("worldwide") ? "" : location));
 			site.setTags(new ArrayList<Tag>(Collections.singleton(tag)));
 			site.setConfig(config);
 
@@ -125,5 +126,6 @@ public class TTMinerStrategy implements SearchStrategy {
 		currentTime++;
 
 	}
+	
 
 }
