@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Component
-@Primary
+//@Primary
 public class TTPersistStrategy implements PersistStrategy {
 
 	@Autowired
