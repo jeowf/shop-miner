@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,12 +51,31 @@ public class CriptoController  {
 		
 		try {
 			coin = priceService.findOne(id).get();
-			re = new ResponseEntity<> (coin, HttpStatus.FOUND);
+			re = new ResponseEntity<> (coin, HttpStatus.OK);
 		} catch (Exception e) {
 			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
 		}
 
 		return re;
 	}
+	
+	@PutMapping("/coin")
+	@ApiOperation(value = "Updates a Coin")
+	public ResponseEntity<Coin> putCoin(@RequestBody Coin coin){
+		ResponseEntity<Coin> re;
+
+		try {
+			Coin c = priceService.findOne(coin.getId()).get();
+			c.setMin(coin.getMin());
+			c.setMax(coin.getMax());
+			priceService.save(c);
+			re = new ResponseEntity<> (c, HttpStatus.OK);
+		} catch (Exception e) {
+			re = new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
+
+		return re;
+	}
+	
 	
 }

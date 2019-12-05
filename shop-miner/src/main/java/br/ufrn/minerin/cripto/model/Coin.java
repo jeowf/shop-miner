@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+
+import org.netlib.util.floatW;
 
 
 @Entity
@@ -24,14 +27,48 @@ public class Coin implements Serializable {
     private String name;
     private String cod;
     
+    private float min;
+    private float max;
     
-    @OneToMany(mappedBy = "coin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    
+
+	@OneToMany(mappedBy = "coin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<RTPrice> rtPrices;
     
     @OneToMany(mappedBy = "coin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<MPrice> mPrices;
 
-	public Integer getId() {
+    @OneToMany(mappedBy = "coin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Notification> notifications;
+    
+    
+    
+    public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+    
+    
+    public Integer getId() {
 		return id;
 	}
 

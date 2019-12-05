@@ -2,9 +2,11 @@ package br.ufrn.minerin.cripto.service.custom;
 
 import br.ufrn.minerin.cripto.model.Coin;
 import br.ufrn.minerin.cripto.model.MPrice;
+import br.ufrn.minerin.cripto.model.Notification;
 import br.ufrn.minerin.cripto.model.RTPrice;
 import br.ufrn.minerin.cripto.service.CoinService;
 import br.ufrn.minerin.cripto.service.MPriceService;
+import br.ufrn.minerin.cripto.service.NotificationService;
 import br.ufrn.minerin.cripto.service.RTPriceService;
 import br.ufrn.minerin.framework.service.core.PersistStrategy;
 
@@ -33,6 +35,9 @@ public class CriptoPersistStrategy implements PersistStrategy {
 	
 	@Autowired
 	private CoinService coinService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public void persistQueries(List<Serializable> queries) {
@@ -81,6 +86,18 @@ public class CriptoPersistStrategy implements PersistStrategy {
 			} else {
 				for(Serializable query : queries){
 					rtPriceService.save((RTPrice) query);
+					RTPrice rtPrice = (RTPrice) query;
+					Coin coin = rtPrice.getCoin();
+					if (coin.getMin() != 0 || coin.getMax() != 0) {
+						if (rtPrice.getValue() > coin.getMin() && rtPrice.getValue() < coin.getMax()) {
+							Notification notification = new Notification();
+							notification.setCoin(coin);
+							notification.setTimestamp(rtPrice.getTimestamp());
+							notification.setValue(rtPrice.getValue());
+							
+							notificationService.save(notification);
+						}
+					}
 				}
 			}
 			
