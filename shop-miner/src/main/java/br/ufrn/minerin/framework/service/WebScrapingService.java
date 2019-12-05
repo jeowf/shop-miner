@@ -57,6 +57,9 @@ public class WebScrapingService {
 				for (Tag tag : site.getTags()) {
 					
 					Elements els = doc.getElementsByClass(tag.getClass_name());
+					
+					//System.out.println(els.toString());
+					
 					Attribute<Elements> atr = new Attribute<Elements>(tag.getName(), els);
 					
 					atrs.add(atr);

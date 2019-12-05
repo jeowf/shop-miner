@@ -3,6 +3,7 @@ package br.ufrn.minerin.cripto.service.custom;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import org.springframework.context.annotation.Primary;
@@ -58,30 +59,40 @@ public class CriptoSearchStrategy implements SearchStrategy {
 
 		tasks = new PriorityQueue<Pair<Favorite>>();
 
-		String[] locations = {"worldwide", "brazil", "brazil/sao-paulo", "brazil/fortaleza", "brazil/rio-de-janeiro", "brazil/recife"};
+		//String[] locations = {"worldwide", "brazil", "brazil/sao-paulo", "brazil/fortaleza", "brazil/rio-de-janeiro", "brazil/recife"};
 
-		for ( String location: locations ) {
-
+		String[] tagClasses = {"js-currency-name", "js-currency-symbol" ,"js-currency-price"};
+		String[] tagNames = {"name", "cod", "value"};
+		
+		List<Tag> tags = new ArrayList<Tag>();
+		
+		for (int i = 0; i < 3; i++) {
 			Tag tag = new Tag();
-			Config config = new Config();
-			Site site = new Site();
-
-			tag.setClass_name("trend-card");
-			tag.setName(location);
-			tag.setId(0);
-
-			site.setId(0);
-			site.setName("investing");
-			site.setUrl("https://br.investing.com/crypto/" + (location.equals("worldwide") ? "" : location));
-			site.setTags(new ArrayList<Tag>(Collections.singleton(tag)));
-			site.setConfig(config);
-
-			config.setSites(new ArrayList<Site>(Collections.singleton(site)));
-
-			Favorite favorite = new Favorite(0, config, "tt", 10);;
-
-			tasks.add( new Pair<Favorite>(3, 3600, favorite) );
+			tag.setClass_name(tagClasses[i]);
+			tag.setName(tagNames[i]);
+			//tag.setId(i);
+			
+			tags.add(tag);
 		}
+		
+		
+		Config config = new Config();
+		Site site = new Site();
+
+		
+
+		site.setId(0);
+		site.setName("investing");
+		site.setUrl("https://br.investing.com/crypto/");
+		site.setTags(tags);
+		site.setConfig(config);
+
+		config.setSites(new ArrayList<Site>(Collections.singleton(site)));
+
+		Favorite favorite = new Favorite(0, config, "cripto", 10);
+
+		tasks.add( new Pair<Favorite>(3, 10, favorite) );
+		
 
 	}
 

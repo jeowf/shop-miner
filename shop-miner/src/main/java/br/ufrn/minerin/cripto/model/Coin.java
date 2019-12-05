@@ -30,6 +30,48 @@ public class Coin implements Serializable {
     
     @OneToMany(mappedBy = "coin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<MPrice> mPrices;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCod() {
+		return cod;
+	}
+
+	public void setCod(String cod) {
+		this.cod = cod;
+	}
+
+	public List<RTPrice> getRtPrices() {
+		return rtPrices;
+	}
+
+	public void setRtPrices(List<RTPrice> rtPrices) {
+		this.rtPrices = rtPrices;
+	}
+
+	public List<MPrice> getmPrices() {
+		return mPrices;
+	}
+
+	public void setmPrices(List<MPrice> mPrices) {
+		this.mPrices = mPrices;
+	}
+    
+    
     
     
     

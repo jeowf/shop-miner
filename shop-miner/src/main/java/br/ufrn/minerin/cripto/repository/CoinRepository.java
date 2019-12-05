@@ -6,4 +6,6 @@ import br.ufrn.minerin.cripto.model.Coin;
 
 public interface CoinRepository extends JpaRepository<Coin, Integer> {
 	Coin findById(int id);
+	
+	Coin findByCod(String cod);
 }

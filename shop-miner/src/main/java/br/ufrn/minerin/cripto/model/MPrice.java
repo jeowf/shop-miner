@@ -32,7 +32,8 @@ public class MPrice implements Serializable {
     
     private float value;
     
-    private floatW variation;
+    private float variation;
+
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "coin_id")
@@ -63,11 +64,11 @@ public class MPrice implements Serializable {
 		this.value = value;
 	}
 
-	public floatW getVariation() {
+	public float getVariation() {
 		return variation;
 	}
 
-	public void setVariation(floatW variation) {
+	public void setVariation(float variation) {
 		this.variation = variation;
 	}
 
